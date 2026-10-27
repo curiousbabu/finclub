@@ -1,0 +1,807 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Red Flag Desk</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+html,body{margin:0}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+[hidden]{display:none!important}
+
+/* Layout: sticky ledger header with live phase board; tabbed working area on a ruled-paper ground; organiser console shares the same sheets. */
+:root{
+  --paper:#EDF1EE; --sheet:#FFFFFF; --ink:#18212B; --muted:#5A6570; --rule:#D1D9D3; --rule2:#E5EAE6;
+  --flag:#C0392B; --flag-soft:#F7E2DF; --go:#2B7A4B; --go-soft:#DCEFE3; --amber:#9C6400; --amber-soft:#F6EACF;
+  --ledger:#1E6672; --ledger-soft:#DCECEE; --hl:#FFF1A8;
+  --f-display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+  --f-body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --r:6px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#0F1317; --sheet:#171D22; --ink:#E4E9E6; --muted:#97A3AB; --rule:#2C353C; --rule2:#21292F;
+  --flag:#F0705F; --flag-soft:#3A201C; --go:#62C08A; --go-soft:#16302A; --amber:#E2A93B; --amber-soft:#382C12;
+  --ledger:#6BC0CB; --ledger-soft:#14303A; --hl:#4A4214; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0F1317; --sheet:#171D22; --ink:#E4E9E6; --muted:#97A3AB; --rule:#2C353C; --rule2:#21292F;
+  --flag:#F0705F; --flag-soft:#3A201C; --go:#62C08A; --go-soft:#16302A; --amber:#E2A93B; --amber-soft:#382C12;
+  --ledger:#6BC0CB; --ledger-soft:#14303A; --hl:#4A4214; color-scheme:dark}
+*{box-sizing:border-box}
+html{background:var(--paper)}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--sheet)}
+h1,h2,h3{font-family:var(--f-display);font-weight:700;letter-spacing:.01em;line-height:1.1;text-wrap:balance;margin:0}
+h2{font-size:1.9rem;text-transform:uppercase}
+h3{font-size:1.25rem;text-transform:uppercase;letter-spacing:.03em}
+p{margin:0}
+a{color:var(--ledger)}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--ledger);outline-offset:2px}
+.mono,.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+.small{font-size:.875rem}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* header */
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--sheet);border-bottom:1px solid var(--rule)}
+.bar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding-block:10px}
+.brand{display:flex;align-items:center;gap:10px;min-width:0;flex:1 1 260px}
+.pennant{width:14px;height:22px;position:relative;flex:none}
+.pennant::before{content:"";position:absolute;left:0;top:0;width:2px;height:22px;background:var(--ink)}
+.pennant::after{content:"";position:absolute;left:2px;top:1px;border-left:12px solid var(--flag);border-top:6px solid transparent;border-bottom:6px solid transparent}
+.brand h1{font-size:1.35rem;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand .club{font-size:.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;white-space:nowrap}
+.board{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.phase{font-family:var(--f-display);font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:1rem;padding:3px 10px;border-radius:var(--r);background:var(--ledger-soft);color:var(--ledger)}
+.phase.live{background:var(--flag-soft);color:var(--flag)}
+.clock{font-family:var(--f-mono);font-size:1.15rem;font-variant-numeric:tabular-nums}
+.clock small{font-size:.75rem;color:var(--muted)}
+.stages{display:flex;gap:4px}
+.stage{font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;padding:2px 7px;border:1px solid var(--rule);border-radius:999px;color:var(--muted);white-space:nowrap}
+.stage.on{border-color:var(--go);color:var(--go);background:var(--go-soft)}
+nav.tabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+nav.tabs::-webkit-scrollbar{display:none}
+nav.tabs button{background:none;border:0;border-bottom:3px solid transparent;padding:8px 12px;cursor:pointer;font-weight:600;color:var(--muted);white-space:nowrap}
+nav.tabs button[aria-current="page"]{color:var(--ink);border-bottom-color:var(--flag)}
+nav.tabs button:hover{color:var(--ink)}
+nav.tabs .org{margin-left:auto;color:var(--ledger)}
+
+main{padding-block:24px 64px}
+.stack{display:flex;flex-direction:column;gap:20px}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px}
+.sheet{background:var(--sheet);border:1px solid var(--rule);border-radius:var(--r);padding:20px;min-width:0}
+.sheet.tight{padding:14px 16px}
+.eyebrow{font-size:.75rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:600}
+.lead{font-size:1.1rem;max-width:68ch}
+.prose{max-width:68ch;display:flex;flex-direction:column;gap:10px}
+ul.clean{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:6px}
+
+/* buttons & forms */
+.btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--rule);background:var(--sheet);border-radius:var(--r);padding:7px 14px;cursor:pointer;font-weight:600}
+.btn:hover{border-color:var(--ink)}
+.btn.primary{background:var(--ink);color:var(--sheet);border-color:var(--ink)}
+.btn.flagged{background:var(--flag);border-color:var(--flag);color:#fff}
+.btn.go{background:var(--go);border-color:var(--go);color:#fff}
+.btn.ghost{background:transparent}
+.btn.sm{padding:3px 9px;font-size:.85rem}
+.btn.armed{background:var(--amber);border-color:var(--amber);color:#fff}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+label.f{display:flex;flex-direction:column;gap:4px;font-size:.85rem;font-weight:600;color:var(--muted);min-width:0}
+input[type=text],input[type=number],select,textarea{background:var(--paper);border:1px solid var(--rule);border-radius:var(--r);padding:7px 9px;color:var(--ink);font-weight:400;font-size:.95rem;width:100%;min-width:0}
+textarea{resize:vertical;min-height:64px}
+textarea.code{font-family:var(--f-mono);font-size:.78rem;min-height:340px;white-space:pre}
+
+/* chips */
+.chip{display:inline-block;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:1px 7px;border-radius:999px;background:var(--rule2);color:var(--muted);white-space:nowrap}
+.chip.easy{background:var(--go-soft);color:var(--go)}
+.chip.medium{background:var(--amber-soft);color:var(--amber)}
+.chip.hard{background:var(--flag-soft);color:var(--flag)}
+.chip.sig{background:var(--flag-soft);color:var(--flag)}
+.chip.noi{background:var(--rule2);color:var(--muted)}
+.chip.w0{background:var(--go-soft);color:var(--go)}
+.chip.w1{background:var(--ledger-soft);color:var(--ledger)}
+.chip.w2{background:var(--rule2);color:var(--muted)}
+
+/* company cards */
+.co{display:flex;flex-direction:column;gap:8px;cursor:pointer;text-align:left;font:inherit;color:inherit}
+.co:hover{border-color:var(--ink)}
+.co h3{font-size:1.45rem}
+.co .tag{color:var(--muted);font-size:.9rem}
+.co .rel{display:flex;gap:4px;margin-top:auto;padding-top:6px}
+
+/* statements */
+.ctabs{display:flex;gap:6px;flex-wrap:wrap}
+.ctabs button{border:1px solid var(--rule);background:var(--sheet);border-radius:999px;padding:4px 12px;font-weight:600;cursor:pointer}
+.ctabs button[aria-pressed="true"]{background:var(--ink);color:var(--sheet);border-color:var(--ink)}
+.ctabs button.lock{color:var(--muted)}
+.tbl{overflow-x:auto;border:1px solid var(--rule);border-radius:var(--r);background:var(--sheet)}
+table{border-collapse:collapse;width:100%}
+table.stmt{min-width:520px}
+table.stmt th,table.stmt td{padding:6px 12px;border-bottom:1px solid var(--rule2);text-align:right}
+table.stmt th:first-child,table.stmt td:first-child{text-align:left}
+table.stmt thead th{font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);background:var(--paper);border-bottom:1px solid var(--rule)}
+table.stmt td.v{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+table.stmt tr.total td{font-weight:600;border-top:1px solid var(--rule)}
+table.stmt tr.grand td{font-weight:700;border-top:2px solid var(--ink);border-bottom:3px double var(--ink)}
+table.stmt tr.head td{font-family:var(--f-display);font-weight:700;letter-spacing:.08em;color:var(--muted);background:var(--paper)}
+td.chg{color:var(--muted);font-size:.85rem}
+td.chg.big{color:var(--ink);font-weight:600}
+table.stmt tbody tr:hover td{background:var(--hl)}
+ol.notes{margin:0;padding-left:1.4em;display:flex;flex-direction:column;gap:10px;max-width:72ch}
+.audit{border-left:3px solid var(--ledger);padding:10px 14px;background:var(--ledger-soft);border-radius:0 var(--r) var(--r) 0;max-width:72ch}
+
+table.list{min-width:560px}
+table.list th,table.list td{padding:8px 10px;border-bottom:1px solid var(--rule2);text-align:left;vertical-align:top}
+table.list th{font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);background:var(--paper)}
+table.list td.n{text-align:right;font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+table.list th.n{text-align:right}
+
+/* flags */
+.flag-item{display:grid;grid-template-columns:1fr auto;gap:4px 12px;padding:10px 0;border-top:1px solid var(--rule2)}
+.flag-item:first-child{border-top:0}
+.flag-item .what{font-weight:600}
+.flag-item .ev{grid-column:1/-1;color:var(--muted);font-size:.92rem}
+.lockline{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+
+/* run sheet */
+.steps{display:flex;flex-direction:column}
+.step{display:grid;grid-template-columns:28px 1fr;gap:10px;padding:8px 0;border-top:1px solid var(--rule2);align-items:start}
+.step:first-child{border-top:0}
+.step .dot{width:22px;height:22px;border-radius:50%;border:2px solid var(--rule);display:grid;place-items:center;font-size:.7rem;font-family:var(--f-mono);color:var(--muted)}
+.step.done .dot{background:var(--go);border-color:var(--go);color:#fff}
+.step.next .dot{border-color:var(--flag);color:var(--flag)}
+.step.next .t{font-weight:700}
+.step .d{font-size:.85rem;color:var(--muted)}
+.bul{display:grid;grid-template-columns:1fr auto;gap:6px 12px;padding:10px 0;border-top:1px solid var(--rule2)}
+.bul:first-child{border-top:0}
+.feed{display:flex;flex-direction:column;gap:12px}
+.news{border-left:3px solid var(--flag);padding:6px 0 6px 14px}
+.news .when{font-family:var(--f-mono);font-size:.78rem;color:var(--muted)}
+.news p{font-size:1.1rem}
+
+.alloc{display:grid;grid-template-columns:minmax(0,1.3fr) 90px minmax(0,2fr);gap:8px 12px;align-items:start}
+@media (max-width:640px){.alloc{grid-template-columns:1fr 90px}.alloc .ra{grid-column:1/-1}}
+.alloc .nm{padding-top:7px;font-weight:600}
+.sum{font-family:var(--f-mono)}
+.sum.bad{color:var(--flag)}
+.notice{padding:12px 14px;border-radius:var(--r);background:var(--amber-soft);color:var(--ink);border:1px solid var(--amber)}
+.notice.info{background:var(--ledger-soft);border-color:var(--ledger)}
+.empty{padding:28px;text-align:center;color:var(--muted);border:1px dashed var(--rule);border-radius:var(--r)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
+.kpi{background:var(--paper);border-radius:var(--r);padding:10px 12px}
+.kpi b{display:block;font-family:var(--f-display);font-size:1.8rem;line-height:1}
+.kpi span{font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.subtabs{display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid var(--rule);padding-bottom:10px}
+.subtabs button{background:none;border:1px solid transparent;border-radius:var(--r);padding:5px 12px;font-weight:600;cursor:pointer;color:var(--muted)}
+.subtabs button[aria-pressed="true"]{border-color:var(--rule);background:var(--sheet);color:var(--ink)}
+.teamlist{display:flex;flex-direction:column;gap:4px}
+.teamlist button{display:flex;justify-content:space-between;gap:8px;text-align:left;border:1px solid transparent;background:none;border-radius:var(--r);padding:7px 10px;cursor:pointer}
+.teamlist button[aria-pressed="true"]{background:var(--sheet);border-color:var(--rule)}
+.split{display:grid;grid-template-columns:240px minmax(0,1fr);gap:20px}
+@media (max-width:760px){.split{grid-template-columns:1fr}}
+.pos{color:var(--go)} .neg{color:var(--flag)}
+.score-total{font-family:var(--f-display);font-size:1.4rem;font-weight:700}
+
+/* toast & modal */
+#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--sheet);padding:9px 16px;border-radius:var(--r);font-weight:600;z-index:60;max-width:calc(100% - 32px)}
+#modal{position:fixed;inset:0;background:rgba(10,14,18,.55);display:grid;place-items:center;z-index:50;padding:20px}
+#modal .box{background:var(--sheet);border-radius:var(--r);padding:24px;max-width:560px;width:100%;display:flex;flex-direction:column;gap:12px}
+
+/* projector */
+#proj{position:fixed;inset:0;z-index:40;background:var(--ink);color:var(--paper);overflow:auto;padding:calc(28px + env(safe-area-inset-top,0px)) max(28px,env(safe-area-inset-right,0px)) 28px max(28px,env(safe-area-inset-left,0px))}
+#proj .pwrap{max-width:1200px;margin:0 auto;display:flex;flex-direction:column;gap:28px}
+#proj .ptop{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+#proj .ptitle{font-family:var(--f-display);font-size:clamp(1.4rem,3vw,2.4rem);text-transform:uppercase;font-weight:700}
+#proj .pphase{font-family:var(--f-display);font-size:clamp(2.4rem,7vw,5.5rem);font-weight:700;text-transform:uppercase;line-height:1}
+#proj .pclock{font-family:var(--f-mono);font-size:clamp(3rem,10vw,8rem);font-variant-numeric:tabular-nums;line-height:1}
+#proj .pnext{font-size:clamp(1rem,2vw,1.5rem);opacity:.75}
+#proj .pnews{border-left:6px solid var(--flag);padding-left:20px;font-size:clamp(1.3rem,3vw,2.2rem);line-height:1.25}
+#proj table{font-size:clamp(1rem,2vw,1.5rem)}
+#proj td,#proj th{padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.15);text-align:left}
+#proj td.n{text-align:right;font-family:var(--f-mono)}
+#proj .btn{background:transparent;color:var(--paper);border-color:rgba(255,255,255,.4)}
+@media (prefers-reduced-motion:no-preference){.flash{animation:flash 1.2s ease-out}@keyframes flash{from{background:var(--hl)}to{background:transparent}}}
+
+.net{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:2px 8px;border-radius:999px;background:var(--flag);color:#fff}
+.joinbox{font-family:var(--f-mono);font-size:1.05rem;word-break:break-all}
+#proj .pjoin{font-family:var(--f-mono);font-size:clamp(1.4rem,4vw,3rem)}
+.login{max-width:420px}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <div class="bar">
+      <div class="brand"><span class="pennant" aria-hidden="true"></span><div style="min-width:0"><div class="club" id="club">Finance Club</div><h1 id="evname">Spot the Red Flag</h1></div></div>
+      <div class="board" id="board" aria-live="polite"></div>
+    </div>
+    <nav class="tabs" id="tabs" aria-label="Sections"></nav>
+  </div>
+</header>
+<main class="wrap" id="main"><div class="empty">Connecting to the event…</div></main>
+<div id="proj" hidden></div>
+<div id="modal" hidden></div>
+<div id="toast" hidden></div>
+
+<script>
+(() => {
+"use strict";
+const PHASES = {setup:"Not started",briefing:"Briefing",r1:"Round 1 · Forensic",break:"Break",r2:"Round 2 · Portfolio",reveal:"Reveal",done:"Finished"};
+const STAGE_NAMES = ["P&L + balance sheet","Cash flows","Notes + auditor"];
+const WIN_LABEL = ["Lock-in 1","Lock-in 2","Final lock-in"];
+
+function lsGet(k){ try{ return localStorage.getItem(k); }catch(_){ return null; } }
+function lsSet(k,v){ try{ if(v) localStorage.setItem(k,v); else localStorage.removeItem(k); }catch(_){} }
+
+const S = {v:"", skew:0, online:true, pub:null, role:"public", team:null, intel:[], org:null,
+  orgTok:lsGet("rfd-org"), teamTok:lsGet("rfd-team"),
+  view:lsGet("rfd-view")||"event", company:null, ctab:"pl", orgTab:"run", selTeam:null, contentDoc:"config", projector:false};
+const drafts = {};
+let armed = null, armTimer = null;
+
+/* ---------- helpers ---------- */
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const clone = o => JSON.parse(JSON.stringify(o ?? null));
+const cfg = () => S.pub?.config || {points:{easy:2,medium:3,hard:5},windowMult:[1.5,1.25,1],falseAlarm:-1,intelCost:2,fullMarksRaw:67,budget:1000000,order:[],durations:{},releaseAt:[0,15,30]};
+const st = () => S.pub?.state || {phase:"setup",stage:0,window:0,allocOpen:false,bulletins:[],reveal:0};
+const order = () => cfg().order || [];
+const coName = cid => S.pub?.profiles?.companies?.[cid]?.name || S.org?.vault?.[cid]?.name || cid;
+const isOrg = () => S.role==="org" && !!S.org;
+const now = () => Date.now()+S.skew;
+function fmtNum(v){ if(v==null||v==="") return ""; const n=Number(v); const a=Math.abs(n); const s=(Math.round(a*10)/10).toLocaleString("en-IN",{minimumFractionDigits:a%1?1:0,maximumFractionDigits:1}); return n<0?"("+s+")":s; }
+function inr(n){ return "₹"+Math.round(n).toLocaleString("en-IN"); }
+function mmss(ms){ ms=Math.max(0,ms); const m=Math.floor(ms/60000), s=Math.floor(ms/1000)%60; return String(m).padStart(2,"0")+":"+String(s).padStart(2,"0"); }
+function hhmm(t){ return new Date(t).toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"}); }
+function toast(msg){ const t=document.getElementById("toast"); t.textContent=msg; t.hidden=false; clearTimeout(toast._t); toast._t=setTimeout(()=>t.hidden=true,2800); }
+
+/* ---------- server ---------- */
+function headers(){ const h={"Content-Type":"application/json"}; if(S.orgTok) h["X-Org"]=S.orgTok; if(S.teamTok) h["X-Team"]=S.teamTok; return h; }
+async function api(path, body){
+  let r;
+  try{ r=await fetch(path,{method:"POST",headers:headers(),body:JSON.stringify(body||{})}); }
+  catch(_){ throw new Error("Can't reach the event laptop. Check you're on the same Wi-Fi."); }
+  const j=await r.json().catch(()=>({}));
+  if(!r.ok){
+    if(r.status===401){ if(path.startsWith("/api/org")){ S.orgTok=null; lsSet("rfd-org",null); } else { S.teamTok=null; lsSet("rfd-team",null); } S.v=""; }
+    throw new Error(j.error||"Request failed");
+  }
+  S.v=""; sync();
+  return j;
+}
+async function act(path, body, ok){ try{ const j=await api(path,body); if(ok) toast(ok); return j; }catch(e){ toast(e.message); return null; } }
+const orgDo = (body, ok) => act("/api/org/do", body, ok);
+const teamDo = (body, ok) => act("/api/team/do", body, ok);
+
+let syncing=false, syncAgain=false;
+async function sync(){
+  if(syncing){ syncAgain=true; return; }
+  syncing=true;
+  try{
+    const r=await fetch("/api/sync?v="+encodeURIComponent(S.v),{headers:headers(),cache:"no-store"});
+    if(r.status===200){
+      const d=await r.json();
+      S.v=String(d.v); S.skew=d.now-Date.now();
+      S.pub={config:d.config,state:d.state,profiles:d.profiles,released:d.released||{}};
+      S.role=d.role; S.team=d.team||null; S.intel=d.intel||[]; S.org=d.org||null;
+      if(S.orgTok && d.role!=="org"){ S.orgTok=null; lsSet("rfd-org",null); }
+      if(S.teamTok && !d.team){ S.teamTok=null; lsSet("rfd-team",null); }
+    }
+    if(!S.online){ S.online=true; }
+    render();
+  }catch(_){ if(S.online){ S.online=false; render(); } }
+  syncing=false;
+  if(syncAgain){ syncAgain=false; sync(); }
+}
+setInterval(sync,2000);
+
+/* ---------- statements ---------- */
+function released(cid){
+  const r=S.pub?.released||{};
+  return {pl:r.s1?.companies?.[cid]?.pl, bs:r.s1?.companies?.[cid]?.bs, cf:r.s2?.companies?.[cid]?.cf,
+          notes:r.s3?.companies?.[cid]?.notes, auditor:r.s3?.companies?.[cid]?.auditor};
+}
+function stmtTable(rows){
+  let h='<div class="tbl"><table class="stmt"><thead><tr><th>₹ crore</th><th>FY25</th><th>FY26</th><th>Change</th></tr></thead><tbody>';
+  for(const r of rows){
+    if(r.kind==="head"){ h+=`<tr class="head"><td colspan="4">${esc(r.label)}</td></tr>`; continue; }
+    let chg="—", big=false;
+    if(typeof r.fy25==="number" && typeof r.fy26==="number" && Math.abs(r.fy25)>0.05){
+      const p=(r.fy26-r.fy25)/Math.abs(r.fy25)*100; chg=(p>0?"+":"")+p.toFixed(0)+"%"; big=Math.abs(p)>=50;
+    }
+    const cls = r.kind==="grand"?"grand":r.kind==="total"?"total":"";
+    h+=`<tr class="${cls}"><td>${esc(r.label)}</td><td class="v">${fmtNum(r.fy25)}</td><td class="v">${fmtNum(r.fy26)}</td><td class="v chg${big?" big":""}">${chg}</td></tr>`;
+  }
+  return h+"</tbody></table></div>";
+}
+
+/* ---------- organiser-side helpers ---------- */
+function lockedFlags(tid){
+  const lk=S.org?.locks?.[tid]||{}, seen={}, out=[];
+  for(let w=0;w<3;w++){
+    for(const f of (lk["w"+w]||[])){
+      if(seen[f.id]) continue; seen[f.id]=1;
+      let win=w; if(tid.startsWith("desk-") && Number.isInteger(f.win)) win=Math.min(w,f.win);
+      out.push({...f,lockWin:win});
+    }
+  }
+  return out;
+}
+const scoreOf = tid => (S.org?.board||[]).find(r=>r.tid===tid) || {raw:0,correct:0,falses:0,unmarked:0,forensic:0,ret:0,portfolio:0,rationale:0,total:0,judged:0};
+function finalPortfolio(tid){ return S.org?.locks?.[tid]?.portfolio || {alloc:S.org?.teams?.[tid]?.alloc||{},rationale:S.org?.teams?.[tid]?.rationale||{}}; }
+function joinUrl(){ const l=S.org?.lan||[]; return l[0] || location.origin; }
+
+/* ---------- header ---------- */
+function phaseClock(){
+  const s=st(), c=cfg(); if(!s.phaseAt) return null;
+  const el=now()-s.phaseAt; const dur=(c.durations||{})[s.phase];
+  let next="";
+  if(s.phase==="r1" && s.stage<3){ const at=(c.releaseAt||[0,15,30])[s.stage]; if(at!=null) next=`Next release: ${STAGE_NAMES[s.stage]} at ${String(at).padStart(2,"0")}:00`; }
+  return {el,dur,next};
+}
+function renderHeader(){
+  const s=st(), c=cfg();
+  document.getElementById("evname").textContent = c.eventName || "Spot the Red Flag, Back the Right Company";
+  document.getElementById("club").textContent = c.clubName || "Finance Club";
+  const live = ["r1","r2"].includes(s.phase);
+  let html = S.online?"":`<span class="net">Offline · retrying</span>`;
+  html += `<span class="phase${live?" live":""}">${esc(PHASES[s.phase]||s.phase)}</span>`;
+  if(s.phaseAt && !["setup","done"].includes(s.phase)) html += `<span class="clock" id="clk"></span>`;
+  html += `<span class="stages">${STAGE_NAMES.map((n,i)=>`<span class="stage${s.stage>i?" on":""}" title="${esc(n)}">${i===0?"P&amp;L+BS":i===1?"Cash flow":"Notes"}</span>`).join("")}</span>`;
+  if(s.phase==="r2") html += `<span class="stage${s.allocOpen?" on":""}">${s.allocOpen?"Allocations open":"Allocations closed"}</span>`;
+  const b=document.getElementById("board"); if(b.innerHTML!==html) b.innerHTML=html;
+  tick();
+  const tabs=[["event","Event"],["companies","Companies"],["toolkit","Toolkit"],["news","News"+(s.bulletins?.length?` (${s.bulletins.length})`:"")],["team",S.team?esc(S.team.name):"My team"],["results","Results"]];
+  let t=tabs.map(([v,l])=>`<button data-act="nav" data-v="${v}" ${S.view===v||(S.view==="company"&&v==="companies")?'aria-current="page"':""}>${l}</button>`).join("");
+  t+=`<button class="org" data-act="nav" data-v="org" ${S.view==="org"?'aria-current="page"':""}>Organiser</button><button data-act="proj">Projector</button>`;
+  const n=document.getElementById("tabs"); if(n.innerHTML!==t) n.innerHTML=t;
+}
+function tick(){
+  const pc=phaseClock(); const el=document.getElementById("clk");
+  if(el && pc) el.innerHTML = `${mmss(pc.el)}${pc.dur?` <small>/ ${pc.dur}:00</small>`:""}`;
+  if(S.projector){ const pe=document.getElementById("pclk"); if(pe&&pc) pe.textContent=mmss(pc.el); }
+}
+setInterval(tick,1000);
+
+/* ---------- public views ---------- */
+function emptyMsg(t){ return `<div class="empty">${t}</div>`; }
+function viewEvent(){
+  const c=cfg(), s=st(), d=c.durations||{};
+  const seg=[["briefing","Briefing",d.briefing,"Rules, scoring, how the timed releases work, and a walkthrough of the toolkit sheet."],
+    ["r1","Round 1: Forensic",d.r1,"Study the statements as they are released and flag red flags: name the company, the issue and the evidence."],
+    ["break","Break",d.break,"A short pause before the investing round."],
+    ["r2","Round 2: Portfolio",d.r2,"Split the virtual budget across the companies and write a short rationale for each holding. News bulletins arrive during the round."],
+    ["reveal","Reveal and debrief",d.reveal,"The hidden red flags, what happened to each company the next year, final scores, and the biggest misses."]];
+  return `<div class="stack">
+  <section class="stack"><div class="eyebrow">A financial statement analysis and investing challenge</div>
+  <h2>Read the numbers. Find what the company hoped you'd miss.</h2>
+  <p class="lead">Six fictional companies, each with statements, a backstory and a few things it would prefer you did not notice. Round 1, hunt for red flags. Round 2, put a virtual budget of <b>${inr(c.budget||1000000)}</b> behind the companies you trust. Teams of 2 to 4; no finance background needed.</p>
+  ${!S.team?`<div class="row"><button class="btn primary" data-act="nav" data-v="team">Register your team</button></div>`:""}</section>
+  <div class="grid2">
+   <section class="sheet stack"><h3>Run of show</h3>
+    <div class="tbl"><table class="list"><thead><tr><th>Segment</th><th class="n">Min</th><th>What happens</th></tr></thead><tbody>
+    ${seg.map(([k,n,m,w])=>`<tr${s.phase===k?' style="background:var(--hl)"':""}><td><b>${n}</b></td><td class="n">${m??""}</td><td>${w}</td></tr>`).join("")}
+    </tbody></table></div></section>
+   <section class="sheet stack"><h3>Scoring · out of 100</h3>
+    <div class="tbl"><table class="list"><thead><tr><th>Component</th><th class="n">Pts</th><th>How</th></tr></thead><tbody>
+     <tr><td><b>Forensic accuracy</b></td><td class="n">40</td><td>Correct flags earn ${c.points.easy} / ${c.points.medium} / ${c.points.hard} points (easy / medium / hard). Flags locked in before the cash flows earn ×${c.windowMult[0]}, before the notes ×${c.windowMult[1]}. False alarms cost ${Math.abs(c.falseAlarm)}; each intel clue costs ${c.intelCost}.</td></tr>
+     <tr><td><b>Portfolio returns</b></td><td class="n">30</td><td>Your weighted return in the "next year" reveal, scaled between the worst and best possible portfolio. Unallocated money earns 0%.</td></tr>
+     <tr><td><b>Quality of rationale</b></td><td class="n">30</td><td>Scored by the judges, so a team cannot win on luck alone.</td></tr>
+    </tbody></table></div></section>
+  </div>
+  <div class="grid3">
+   <section class="sheet stack"><h3>Round 1 · Forensic</h3><ul class="clean">
+    <li><b>Minute ${c.releaseAt?.[0]??0}:</b> P&amp;L and balance sheet.</li>
+    <li><b>Minute ${c.releaseAt?.[1]??15}:</b> cash flow statements.</li>
+    <li><b>Minute ${c.releaseAt?.[2]??30}:</b> notes to accounts and auditor's remarks.</li>
+    <li>Before each release, every flag you have is locked in. Earlier flags score more.</li>
+    <li>Be specific: company, issue, evidence. "Receivables grew much faster than revenue."</li>
+    <li>Market intel desk: pay ${c.intelCost} points for one clue, such as an industry average.</li></ul></section>
+   <section class="sheet stack"><h3>Round 2 · Portfolio</h3><ul class="clean">
+    <li>Split the budget across the six companies in percent. Anything left over stays in cash.</li>
+    <li>Write two or three lines on why you hold each one.</li>
+    <li>News bulletins arrive every 10 to 15 minutes. Some matter, some are noise.</li>
+    <li>You can change your allocation only while an adjustment window is open.</li></ul></section>
+   <section class="sheet stack"><h3>How to submit</h3><ul class="clean">
+    <li>Register your team once with a name and a PIN. Teammates can log in on their own phones with the same name and PIN.</li>
+    <li>Everyone in the team sees the same flags and portfolio live.</li>
+    <li>No phone? Hand paper answer sheets to the score desk before each lock-in.</li></ul></section>
+  </div></div>`;
+}
+function viewCompanies(){
+  const s=st();
+  if(!S.pub?.profiles) return emptyMsg("Loading companies…");
+  return `<div class="stack"><div class="row" style="justify-content:space-between"><h2>The companies</h2><span class="muted small">Some are healthy, one is a risky but honest gamble, and some are not what they appear.</span></div>
+  <div class="grid3">${order().map(cid=>{ const p=S.pub.profiles.companies?.[cid]||{}; const r=released(cid);
+    return `<button class="sheet co" data-act="open-co" data-c="${cid}"><span class="eyebrow">${esc(p.tagline||"")}</span><h3>${esc(p.name||cid)}</h3><p class="tag">${esc(p.story||"")}</p>
+    <span class="rel"><span class="stage${r.pl?" on":""}">P&amp;L+BS</span><span class="stage${r.cf?" on":""}">Cash flow</span><span class="stage${r.notes?" on":""}">Notes</span></span></button>`;}).join("")}</div>
+  ${s.stage===0?`<p class="muted">Statements are released in stages once Round 1 starts.</p>`:""}</div>`;
+}
+function viewCompany(cid){
+  const p=S.pub?.profiles?.companies?.[cid]||{}, r=released(cid), c=cfg();
+  const tabs=[["pl","Profit & loss",r.pl],["bs","Balance sheet",r.bs],["cf","Cash flow",r.cf],["notes","Notes & auditor",r.notes]];
+  if(!tabs.find(t=>t[0]===S.ctab)) S.ctab="pl";
+  const cur=tabs.find(t=>t[0]===S.ctab);
+  let body;
+  if(!cur[2]){ const i={pl:0,bs:0,cf:1,notes:2}[S.ctab]; body=emptyMsg(`Released about ${c.releaseAt?.[i]??[0,15,30][i]} minutes into Round 1.`); }
+  else if(S.ctab==="notes") body=`<div class="stack"><ol class="notes">${r.notes.map(n=>`<li>${esc(n)}</li>`).join("")}</ol><div class="audit"><div class="eyebrow">Auditor's remarks</div><p>${esc(r.auditor||"")}</p></div></div>`;
+  else body=stmtTable(cur[2]);
+  const o=order(), idx=o.indexOf(cid), prev=o[(idx+o.length-1)%o.length], next=o[(idx+1)%o.length];
+  return `<div class="stack">
+   <div class="row" style="justify-content:space-between"><button class="btn ghost sm" data-act="nav" data-v="companies">← All companies</button>
+    <span class="row"><button class="btn ghost sm" data-act="open-co" data-c="${prev}">← ${esc(coName(prev))}</button><button class="btn ghost sm" data-act="open-co" data-c="${next}">${esc(coName(next))} →</button></span></div>
+   <div class="grid2" style="align-items:start">
+    <section class="stack"><div class="eyebrow">${esc(p.tagline||"")}</div><h2>${esc(p.name||cid)}</h2><p class="lead">${esc(p.story||"")}</p></section>
+    <section class="sheet tight stack small"><div><b>Sells:</b> ${esc(p.sells||"")}</div><div><b>Customers:</b> ${esc(p.customers||"")}</div><div><b>Who runs it:</b> ${esc(p.runs||"")}</div></section>
+   </div>
+   <div class="ctabs" role="group" aria-label="Statement">${tabs.map(([k,l,v])=>`<button data-act="co-tab" data-t="${k}" aria-pressed="${S.ctab===k}" class="${v?"":"lock"}">${l}${v?"":" · locked"}</button>`).join("")}</div>
+   ${body}
+   <p class="muted small">Figures in ₹ crore, years ending 31 March. Brackets are negative numbers. Change = FY26 vs FY25.</p></div>`;
+}
+function viewToolkit(){
+  const row=(n,f,ok,bad)=>`<tr><td><b>${n}</b></td><td class="mono small">${f}</td><td>${ok}</td><td>${bad}</td></tr>`;
+  return `<div class="stack"><h2>Toolkit sheet</h2><p class="lead">The key ratios in plain English. A ratio is a question, not a verdict: always ask why it moved.</p>
+  <div class="tbl"><table class="list"><thead><tr><th>Ratio</th><th>Formula</th><th>Looks healthy</th><th>Looks concerning</th></tr></thead><tbody>
+  ${row("Revenue growth","(FY26 − FY25) ÷ FY25","Steady, explained by volume or price","Much faster than peers with no clear reason")}
+  ${row("Gross / EBITDA margin","Profit line ÷ Revenue","Stable or improving for a known reason","Rising while the business looks stressed, or falling fast")}
+  ${row("Receivable days","Receivables ÷ Revenue × 365","Stable; close to industry norm","Receivables growing much faster than revenue")}
+  ${row("Inventory days","Inventory ÷ Cost of goods × 365","Stable; stock moves","Stock piling up faster than sales")}
+  ${row("Cash conversion","Operating cash flow ÷ Net profit","Close to or above 1 for a mature business","Profit up, operating cash flow down or negative")}
+  ${row("Free cash flow","Operating cash flow − Capex","Positive, or negative only while building with a plan","Persistently negative, filled with new debt")}
+  ${row("Debt to equity","Borrowings ÷ Equity","Below about 1 for most firms","Jumping in a single year")}
+  ${row("Interest coverage","EBITDA ÷ Finance costs","Above 4","Below 2")}
+  ${row("Cash runway","Cash ÷ yearly cash burn","More than 18 months","Under 12 months with no funding lined up")}
+  </tbody></table></div>
+  <div class="grid2">
+   <section class="sheet stack"><h3>Where to look in the notes</h3><ul class="clean">
+    <li><b>Accounting policy changes:</b> revenue recognised earlier, useful lives extended.</li>
+    <li><b>Capitalised costs:</b> expenses moved onto the balance sheet as "assets".</li>
+    <li><b>Related parties:</b> sales to, purchases from or loans to people linked to the promoters.</li>
+    <li><b>Ageing:</b> receivables or stock that is old and not provided for.</li>
+    <li><b>Contingent liabilities:</b> disputes and claims not in the numbers.</li>
+    <li><b>Promoter pledges:</b> owners borrowing against their shares.</li>
+    <li><b>Auditor:</b> unmodified, emphasis of matter, qualified, adverse, or disclaimer. A resignation is a loud signal.</li></ul></section>
+   <section class="sheet stack"><h3>Not every odd number is a problem</h3><ul class="clean">
+    <li>Start-ups lose money while building. Ask whether they say so honestly and how long the cash lasts.</li>
+    <li>Heavy capex during a disclosed expansion is normal. Check how it is paid for.</li>
+    <li>One-off gains are fine if disclosed. Strip them out before comparing years.</li>
+    <li>A false alarm costs a point. A vague flag ("profit looks weird") scores nothing.</li>
+    <li>Strong flag format: <i>Company · issue · evidence with numbers.</i></li></ul></section>
+  </div></div>`;
+}
+function viewNews(){
+  const b=(st().bulletins||[]).slice().reverse();
+  return `<div class="stack"><h2>News desk</h2><p class="muted">Bulletins arrive during Round 2. Some confirm a concern; others sound alarming but change nothing important.</p>
+  ${b.length?`<div class="feed">${b.map((x,i)=>`<div class="news${i===0?" flash":""}"><div class="when">${hhmm(x.at)} · ${esc(coName(x.company))}</div><p>${esc(x.text)}</p></div>`).join("")}</div>`:emptyMsg("No bulletins yet.")}</div>`;
+}
+function viewResults(){
+  const rv=S.pub?.released?.reveal, s=st();
+  if(!rv || !(s.reveal>0)) return `<div class="stack"><h2>Results</h2>${emptyMsg("The red flags, next-year outcomes and scores are revealed at the end of the event.")}</div>`;
+  let h=`<div class="stack"><h2>Results</h2>`;
+  if(rv.board && s.reveal>=3){
+    h+=`<section class="sheet stack"><h3>Final scores</h3><div class="tbl"><table class="list"><thead><tr><th>#</th><th>Team</th><th class="n">Forensic /40</th><th class="n">Portfolio /30</th><th class="n">Rationale /30</th><th class="n">Total</th><th class="n">Return</th></tr></thead><tbody>
+    ${rv.board.map((r,i)=>`<tr${S.team&&S.team.name===r.name?' style="background:var(--hl)"':""}><td>${i+1}</td><td><b>${esc(r.name)}</b></td><td class="n">${r.forensic.toFixed(1)}</td><td class="n">${r.portfolio.toFixed(1)}</td><td class="n">${r.rationale.toFixed(1)}</td><td class="n"><b>${r.total.toFixed(1)}</b></td><td class="n ${r.ret>=0?"pos":"neg"}">${r.ret>=0?"+":""}${r.ret.toFixed(1)}%</td></tr>`).join("")}</tbody></table></div></section>`;
+  }
+  h+=`<div class="grid2">${order().map(cid=>{
+    const fl=rv.flags?.[cid]||[], oc=rv.outcomes?.[cid], tr=rv.traps?.[cid]||[];
+    return `<section class="sheet stack"><div class="row" style="justify-content:space-between"><h3>${esc(coName(cid))}</h3>${oc?`<span class="score-total ${oc.ret>=0?"pos":"neg"}">${oc.ret>=0?"+":""}${oc.ret}%</span>`:""}</div>
+     ${oc?`<p>${esc(oc.story)}</p>`:""}
+     <div class="stack" style="gap:0">${fl.map(f=>`<div class="flag-item"><span class="what">${esc(f.title)}</span><span class="row" style="gap:4px"><span class="chip ${f.diff}">${f.diff}</span><span class="chip">${["P&L/BS","Cash flow","Notes"][f.stage-1]}</span></span><span class="ev">${esc(f.evidence)}</span></div>`).join("")}</div>
+     ${tr.length?`<div class="small muted"><b>Not red flags:</b> ${tr.map(esc).join(" · ")}</div>`:""}</section>`;}).join("")}</div></div>`;
+  return h;
+}
+
+/* ---------- team desk (teams and organisers share it) ---------- */
+function teamEditor(tid, t, admin){
+  const s=st(), c=cfg();
+  const flags=t.flags||[];
+  const canFlag = admin || (s.phase==="r1" && !s.endedR1);
+  const canAlloc = admin || (s.phase==="r2" && s.allocOpen);
+  const alloc=t.alloc||{}, rat=t.rationale||{};
+  const total=order().reduce((a,cid)=>a+(Number(alloc[cid])||0),0);
+  const opts=order().map(cid=>`<option value="${cid}">${esc(coName(cid))}</option>`).join("");
+  const k=esc(tid);
+  let h=`<div class="grid2" style="align-items:start"><section class="sheet stack"><div class="row" style="justify-content:space-between"><h3>Red flags</h3><span class="chip">${flags.length} submitted</span></div>`;
+  if(canFlag){
+    h+=`<form class="stack" data-form="flag" data-tid="${k}" data-admin="${admin?1:0}" style="gap:10px">
+      <label class="f">Company<select id="fc-${k}">${opts}</select></label>
+      <label class="f">Issue<input type="text" id="fi-${k}" maxlength="160" placeholder="Receivables growing much faster than revenue"></label>
+      <label class="f">Evidence<textarea id="fe-${k}" maxlength="500" placeholder="Receivables ₹45 cr → ₹120 cr (+167%) vs revenue +58%"></textarea></label>
+      ${admin&&tid.startsWith("desk-")?`<label class="f">Counts from<select id="fw-${k}">${WIN_LABEL.map((l,i)=>`<option value="${i}" ${i===(s.window||0)?"selected":""}>${l} (×${c.windowMult[i]})</option>`).join("")}</select></label>`:""}
+      <div class="row"><button class="btn flagged" type="submit">Add flag</button><span class="muted small">Locks in at the next release (${WIN_LABEL[s.window||0]}, ×${c.windowMult[s.window||0]}).</span></div></form>`;
+  } else h+=`<p class="muted small">${s.endedR1?"Round 1 is over; flags are final.":"Flags open when Round 1 starts."}</p>`;
+  if(flags.length){
+    h+=`<div>${flags.slice().reverse().map(f=>{
+      const locked = !admin && ((f.window??0) < (s.window||0) || s.endedR1);
+      const w=Number.isInteger(f.win)?f.win:(f.window??0);
+      return `<div class="flag-item"><span class="what">${esc(coName(f.company))} · ${esc(f.issue)}</span>
+        <span class="lockline"><span class="chip w${w}">${locked?"Locked · ":""}${WIN_LABEL[w]}</span>${!locked&&canFlag?`<button class="btn sm ghost" data-act="del-flag" data-tid="${k}" data-admin="${admin?1:0}" data-fid="${esc(f.id)}">Remove</button>`:""}</span>
+        <span class="ev">${esc(f.evidence||"")}</span></div>`;}).join("")}</div>`;
+  }
+  if(!admin){
+    const delivered=S.intel||[], reqs=t.intelReq||[];
+    h+=`<div class="stack" style="gap:8px;border-top:1px solid var(--rule);padding-top:14px"><h3>Market intel desk</h3><p class="small muted">One clue per company, such as an industry average or peer comparison. Each costs ${c.intelCost} forensic points.</p>
+      ${s.phase==="r1"&&!s.endedR1&&order().some(cid=>!reqs.includes(cid))?`<div class="row"><select id="ic-${k}" style="width:auto;flex:1" aria-label="Company">${order().filter(cid=>!reqs.includes(cid)).map(cid=>`<option value="${cid}">${esc(coName(cid))}</option>`).join("")}</select><button class="btn" data-act="req-intel" data-tid="${k}">Buy clue</button></div>`:""}
+      ${reqs.filter(cid=>!delivered.find(d=>d.cid===cid)).map(cid=>`<div class="small muted">Requested: ${esc(coName(cid))}. The desk will deliver it here.</div>`).join("")}
+      ${delivered.map(d=>`<div class="audit"><div class="eyebrow">${esc(coName(d.cid))} · ${esc(d.title)}</div><p>${esc(d.text)}</p></div>`).join("")}</div>`;
+  }
+  h+=`</section><section class="sheet stack"><div class="row" style="justify-content:space-between"><h3>Portfolio</h3><span class="muted small">Budget ${inr(c.budget||1000000)}</span></div>`;
+  if(!canAlloc) h+=`<p class="muted small">${s.phase==="r2"?"The allocation window is closed. Wait for the next adjustment window.":s.endedR2?"Portfolios are final.":"Allocations open in Round 2."}</p>`;
+  h+=`<form class="stack" data-form="alloc" data-tid="${k}" data-admin="${admin?1:0}" style="gap:10px"><div class="alloc">
+      <span class="eyebrow">Company</span><span class="eyebrow">%</span><span class="eyebrow ra">Rationale</span>
+      ${order().map(cid=>`<span class="nm">${esc(coName(cid))}</span><input type="number" inputmode="numeric" min="0" max="100" step="1" id="al-${k}-${cid}" value="${Number(alloc[cid])||0}" ${canAlloc?"":"disabled"} aria-label="${esc(coName(cid))} percent"><textarea class="ra" id="ra-${k}-${cid}" maxlength="500" ${canAlloc?"":"disabled"} placeholder="Why hold (or skip) it?" aria-label="${esc(coName(cid))} rationale">${esc(rat[cid]||"")}</textarea>`).join("")}
+    </div>
+    <div class="row" style="justify-content:space-between"><span class="sum${total>100?" bad":""}" id="sum-${k}">Allocated ${total}% · cash ${Math.max(0,100-total)}%</span>
+    ${canAlloc?`<button class="btn primary" type="submit">Save portfolio</button>`:""}</div></form>
+    ${t.allocAt?`<p class="small muted">Last saved ${hhmm(t.allocAt)}.</p>`:""}</section></div>`;
+  return h;
+}
+function viewTeam(){
+  if(S.team) return `<div class="stack"><div class="row" style="justify-content:space-between"><div><div class="eyebrow">Team desk</div><h2>${esc(S.team.name)}</h2><div class="muted small">${esc(S.team.members||"")}</div></div><button class="btn ghost sm" data-act="team-logout">Log out on this device</button></div>${teamEditor(S.team.tid,S.team,false)}</div>`;
+  return `<div class="stack"><h2>Team desk</h2><div class="grid2" style="align-items:start">
+   <form class="sheet stack" data-form="register"><h3>Register a new team</h3>
+    <label class="f">Team name<input type="text" id="rg-name" maxlength="40" placeholder="The Auditors" autocomplete="off"></label>
+    <label class="f">Members (2 to 4)<input type="text" id="rg-members" maxlength="160" placeholder="Asha, Rohan, Meera"></label>
+    <label class="f">Team PIN (4+ digits, share it with your teammates)<input type="text" id="rg-pin" inputmode="numeric" maxlength="12" autocomplete="off"></label>
+    <button class="btn primary" type="submit" style="align-self:start">Register</button></form>
+   <form class="sheet stack" data-form="team-login"><h3>Already registered?</h3><p class="muted small">Log in on another phone with your team name and PIN.</p>
+    <label class="f">Team name<input type="text" id="lg-name" maxlength="40" autocomplete="off"></label>
+    <label class="f">Team PIN<input type="password" id="lg-pin" inputmode="numeric" maxlength="12"></label>
+    <button class="btn" type="submit" style="align-self:start">Log in</button></form>
+  </div></div>`;
+}
+
+/* ---------- organiser ---------- */
+function steps(){
+  const s=st(), c=cfg(), P=["setup","briefing","r1","break","r2","reveal","done"], pi=P.indexOf(s.phase);
+  return [
+    {k:"briefing",t:"Start the briefing",d:"Starts the clock on the projector.",done:pi>=1},
+    {k:"r1",t:"Start Round 1: release P&L and balance sheets",d:"Teams can now submit flags.",done:s.stage>=1},
+    {k:"rel2",t:"Lock in, then release cash flows",d:"Snapshots every team's flags (×"+c.windowMult[0]+").",done:s.stage>=2},
+    {k:"rel3",t:"Lock in, then release notes and auditor remarks",d:"Snapshots flags again (×"+c.windowMult[1]+").",done:s.stage>=3},
+    {k:"endr1",t:"End Round 1 and start the break",d:"Final lock-in. Mark flags during the break.",done:!!s.endedR1},
+    {k:"r2",t:"Start Round 2: open allocations",d:"Teams split the budget. Announce bulletins on the right.",done:pi>=4},
+    {k:"endr2",t:"End Round 2: freeze portfolios",d:"Snapshots final allocations and rationales.",done:!!s.endedR2},
+    {k:"rv1",t:"Reveal the red flags",d:"Publishes the answer key.",done:(s.reveal||0)>=1},
+    {k:"rv2",t:"Reveal what happened next year",d:"Publishes each company's return.",done:(s.reveal||0)>=2},
+    {k:"rv3",t:"Reveal the scores",d:"Publishes the leaderboard. Enter judges' scores first.",done:(s.reveal||0)>=3},
+  ];
+}
+function armBtn(key,label,cls){ return `<button class="btn ${armed===key?"armed":cls||""}" data-act="arm" data-k="${esc(key)}">${armed===key?"Click again to confirm":label}</button>`; }
+function orgRun(){
+  const s=st(), list=steps(), nx=list.find(x=>!x.done), c=cfg(), O=S.org;
+  const teams=Object.keys(O.teams).length, flagCount=Object.values(O.teams).reduce((a,t)=>a+(t.flags||[]).length,0);
+  const pending=Object.entries(O.teams).flatMap(([tid,t])=>(t.intelReq||[]).filter(cid=>!((O.marks[tid]?.intel)||[]).includes(cid)).map(cid=>({tid,cid,name:t.name})));
+  const announced=new Set((s.bulletins||[]).map(b=>b.id));
+  const pc=phaseClock();
+  return `<div class="grid2" style="align-items:start">
+  <section class="sheet stack"><div class="row" style="justify-content:space-between"><h3>Run sheet</h3>${pc?`<span class="mono">${esc(PHASES[s.phase])} · ${mmss(pc.el)}</span>`:""}</div>
+   ${pc?.next?`<div class="notice info">${pc.next}</div>`:""}
+   <div class="steps">${list.map((x,i)=>`<div class="step ${x.done?"done":x===nx?"next":""}"><span class="dot">${x.done?"✓":i+1}</span><div><div class="t">${x.t}</div><div class="d">${x.d}</div></div></div>`).join("")}</div>
+   ${nx?`<div class="row">${armBtn("step:"+nx.k,nx.t,"primary")}</div>`:`<p class="muted">The event is complete.</p>`}
+   ${s.phase==="r2"?`<div class="row">${s.allocOpen?`<button class="btn" data-act="org" data-o="alloc_close">Close allocation window</button>`:`<button class="btn go" data-act="org" data-o="alloc_open">Open adjustment window</button>`}</div>`:""}
+  </section>
+  <div class="stack">
+   <section class="sheet stack"><h3>Join address</h3><p class="small muted">Phones must be on the same Wi-Fi or hotspot as this laptop.</p>
+    ${(O.lan||[]).length?(O.lan.map(u=>`<div class="joinbox">${esc(u)}</div>`).join("")):`<div class="joinbox">${esc(location.origin)}</div>`}
+    <div class="small muted">Organiser PIN: <span class="mono">${esc(O.orgPin)}</span></div></section>
+   <section class="sheet stack"><h3>Live</h3><div class="kpis"><div class="kpi"><b>${teams}</b><span>Teams</span></div><div class="kpi"><b>${flagCount}</b><span>Flags in</span></div><div class="kpi"><b>${(s.bulletins||[]).length}</b><span>Bulletins</span></div></div>
+    ${pending.length?`<div class="stack" style="gap:6px"><div class="eyebrow">Intel requests</div>${pending.map(p=>`<div class="row" style="justify-content:space-between"><span>${esc(p.name)} · ${esc(coName(p.cid))}</span><button class="btn sm" data-act="deliver" data-tid="${esc(p.tid)}" data-c="${p.cid}">Deliver (−${c.intelCost})</button></div>`).join("")}</div>`:""}
+   </section>
+   <section class="sheet stack"><h3>News bulletins</h3><p class="small muted">Only organisers see the signal/noise tag. Announce one every 10 to 15 minutes in Round 2.</p>
+    <div>${(O.vault.bulletins?.items||[]).map(b=>`<div class="bul"><div><div class="row" style="gap:6px"><span class="chip ${b.kind==="signal"?"sig":"noi"}">${esc(b.kind)}</span><span class="small muted">${esc(coName(b.company))}</span></div><div>${esc(b.text)}</div><div class="small muted">${esc(b.note||"")}</div></div>
+     <div>${announced.has(b.id)?`<button class="btn sm ghost" data-act="org" data-o="retract" data-b="${esc(b.id)}">Retract</button>`:`<button class="btn sm" data-act="org" data-o="announce" data-b="${esc(b.id)}">Announce</button>`}</div></div>`).join("")||emptyMsg("No bulletins in Content.")}</div>
+   </section>
+   <section class="sheet stack"><h3>Reset</h3><p class="small muted">Clears released statements, news, lock-ins, marks and the clock. Teams are kept unless you choose otherwise.</p><div class="row">${armBtn("reset","Reset event")}${armBtn("reset-all","Reset and delete teams")}</div>
+    <div class="row"><input type="text" id="org-newpin" maxlength="20" placeholder="New organiser PIN" style="max-width:200px" aria-label="New organiser PIN"><button class="btn sm" data-act="set-org-pin">Change PIN</button></div></section>
+  </div></div>`;
+}
+function orgTeams(){
+  const O=S.org, ids=Object.keys(O.teams).sort((a,b)=>(O.teams[a].name||"").localeCompare(O.teams[b].name||""));
+  if(S.selTeam && !O.teams[S.selTeam]) S.selTeam=null;
+  const sel=S.selTeam||ids[0], c=cfg();
+  const t=sel?O.teams[sel]:null, mk=sel?O.marks[sel]||{}:{};
+  return `<div class="split">
+   <div class="stack"><form class="sheet tight stack" data-form="desk-team" style="gap:8px"><div class="eyebrow">Add a paper team</div><input type="text" id="dt-name" maxlength="40" placeholder="Team name" aria-label="Team name"><input type="text" id="dt-members" maxlength="160" placeholder="Members" aria-label="Members"><button class="btn sm primary" type="submit" style="align-self:start">Add team</button></form>
+    <div class="teamlist">${ids.map(id=>`<button data-act="sel-team" data-tid="${esc(id)}" aria-pressed="${id===sel}"><span>${esc(O.teams[id].name||"Team")}</span><span class="chip">${id.startsWith("desk-")?"paper":"online"}</span></button>`).join("")||`<p class="muted small">No teams yet.</p>`}</div></div>
+   <div class="stack">${t?`<div class="row" style="justify-content:space-between"><div><h2>${esc(t.name)}</h2><div class="muted small">${esc(t.members||"")} · ${sel.startsWith("desk-")?"Entered at the score desk":"Submits online"}</div></div>${armBtn("delteam:"+sel,"Delete team")}</div>
+     <section class="sheet tight row" style="justify-content:space-between"><span><b>Intel bought:</b> ${(mk.intel||[]).map(coName).map(esc).join(", ")||"none"}</span>
+      ${order().some(cid=>!(mk.intel||[]).includes(cid))?`<span class="row"><select id="si-${esc(sel)}" style="width:auto" aria-label="Company">${order().filter(cid=>!(mk.intel||[]).includes(cid)).map(cid=>`<option value="${cid}">${esc(coName(cid))}</option>`).join("")}</select><button class="btn sm" data-act="sell-intel" data-tid="${esc(sel)}">Sell clue (−${c.intelCost})</button></span>`:""}</section>
+     <section class="sheet tight row" style="justify-content:space-between"><span class="small muted">Forgotten PIN, or want a paper team online? Set a new team PIN.</span><span class="row"><input type="text" id="tp-${esc(sel)}" maxlength="12" placeholder="New PIN" style="width:120px" aria-label="New team PIN"><button class="btn sm" data-act="team-pin" data-tid="${esc(sel)}">Set PIN</button></span></section>
+     ${teamEditor(sel,t,true)}`:emptyMsg("Add a team, or wait for teams to register.")}</div></div>`;
+}
+function orgMarking(){
+  const s=st(), O=S.org, ids=Object.keys(O.teams);
+  if(!ids.length) return emptyMsg("No teams yet.");
+  let h=`<div class="stack">${!s.endedR1?`<div class="notice info">Only locked-in flags appear here. The final lock-in happens when you end Round 1.</div>`:""}
+   <p class="muted small">Match each flag to the answer key. A team scores each key flag once, at its best lock-in. "Valid, not on key" scores 0 with no penalty.</p>`;
+  for(const tid of ids){
+    const t=O.teams[tid], fl=lockedFlags(tid), mk=O.marks[tid]||{}, sc=scoreOf(tid);
+    h+=`<section class="sheet stack"><div class="row" style="justify-content:space-between"><h3>${esc(t.name)}</h3><span class="small mono">${sc.correct} correct · ${sc.falses} false · ${sc.unmarked} unmarked · raw ${sc.raw.toFixed(1)} → ${sc.forensic.toFixed(1)}/40</span></div>
+     ${fl.length?`<div class="tbl"><table class="list"><thead><tr><th>Flag</th><th>Lock-in</th><th style="min-width:220px">Mark</th></tr></thead><tbody>${fl.map(f=>{
+       const m=(mk.flags||{})[f.id]||"";
+       const keyOpts=(O.vault[f.company]?.key||[]).map(k=>`<option value="${esc(k.id)}" ${m===k.id?"selected":""}>✓ ${esc(k.title)} (${k.diff})</option>`).join("");
+       return `<tr><td><b>${esc(coName(f.company))}</b> · ${esc(f.issue)}<div class="small muted">${esc(f.evidence||"")}</div></td><td><span class="chip w${f.lockWin}">×${cfg().windowMult[f.lockWin]}</span></td>
+        <td><select data-mark="${esc(tid)}" data-fid="${esc(f.id)}" aria-label="Mark"><option value="">Unmarked</option>${keyOpts}<option value="neutral" ${m==="neutral"?"selected":""}>Valid, not on key (0)</option><option value="false" ${m==="false"?"selected":""}>False alarm (${cfg().falseAlarm})</option></select></td></tr>`;}).join("")}</tbody></table></div>`:`<p class="muted small">No locked-in flags.</p>`}
+    </section>`;
+  }
+  return h+`</div>`;
+}
+function orgJudging(){
+  const O=S.org, ids=Object.keys(O.teams);
+  if(!ids.length) return emptyMsg("No teams yet.");
+  return `<div class="stack"><p class="muted small">Each judge scores the written rationale out of 30. The average counts. ${st().endedR2?"Showing frozen portfolios.":"Portfolios are still live until Round 2 ends."}</p>
+  ${ids.map(tid=>{ const t=O.teams[tid], pf=finalPortfolio(tid), j=(O.marks[tid]||{}).judges||[];
+   return `<section class="sheet stack"><div class="row" style="justify-content:space-between"><h3>${esc(t.name)}</h3>
+    <span class="row"><label class="f" style="flex-direction:row;align-items:center;gap:6px">Judge 1<input type="number" min="0" max="30" step="0.5" style="width:80px" id="jg-${esc(tid)}-0" data-judge="${esc(tid)}" data-j="0" value="${j[0]??""}"></label>
+    <label class="f" style="flex-direction:row;align-items:center;gap:6px">Judge 2<input type="number" min="0" max="30" step="0.5" style="width:80px" id="jg-${esc(tid)}-1" data-judge="${esc(tid)}" data-j="1" value="${j[1]??""}"></label></span></div>
+    <div class="tbl"><table class="list"><thead><tr><th>Company</th><th class="n">%</th><th>Rationale</th></tr></thead><tbody>${order().map(cid=>`<tr><td>${esc(coName(cid))}</td><td class="n">${Number(pf.alloc?.[cid])||0}</td><td>${esc(pf.rationale?.[cid]||"")}</td></tr>`).join("")}</tbody></table></div></section>`;}).join("")}</div>`;
+}
+function orgScores(){
+  const lb=S.org.board||[], c=cfg();
+  return `<div class="stack"><div class="row" style="justify-content:space-between"><h3>Leaderboard (live, organisers only)</h3><button class="btn" data-act="csv">Copy as CSV</button></div>
+  <p class="small muted">Forensic: raw points ÷ ${c.fullMarksRaw} × 40, capped at 40. Change the full-marks figure in Content → Settings.</p>
+  ${lb.length?`<div class="tbl"><table class="list"><thead><tr><th>#</th><th>Team</th><th class="n">Raw</th><th class="n">Forensic</th><th class="n">Return</th><th class="n">Portfolio</th><th class="n">Rationale</th><th class="n">Total</th><th>Check</th></tr></thead><tbody>
+  ${lb.map((r,i)=>`<tr><td>${i+1}</td><td><b>${esc(r.name)}</b></td><td class="n">${r.raw.toFixed(1)}</td><td class="n">${r.forensic.toFixed(1)}</td><td class="n ${r.ret>=0?"pos":"neg"}">${r.ret.toFixed(1)}%</td><td class="n">${r.portfolio.toFixed(1)}</td><td class="n">${r.rationale.toFixed(1)}</td><td class="n"><b>${r.total.toFixed(1)}</b></td><td class="small">${[r.unmarked?`${r.unmarked} unmarked`:"",r.judged<2?`${r.judged}/2 judged`:""].filter(Boolean).join(" · ")||"✓"}</td></tr>`).join("")}</tbody></table></div>`:emptyMsg("No teams yet.")}</div>`;
+}
+function orgContent(){
+  const O=S.org;
+  const docs=[["config","Settings"],...order().map(cid=>["vault/"+cid,coName(cid)]),["vault/bulletins","News bulletins"],["profiles","Public company profiles"]];
+  const cur=S.contentDoc;
+  const val = cur==="config"?S.pub.config: cur==="profiles"?S.pub.profiles: O.vault[cur.split("/")[1]];
+  const id="json-"+cur.replace(/\W/g,"_");
+  return `<div class="stack"><p class="muted small">Edit the event's data directly. Company entries hold the statements, notes, auditor remarks, answer key, traps, intel clue and next-year outcome. Statements are copied to teams at release time, so edit before you release.</p>
+   <div class="subtabs">${docs.map(([p,l])=>`<button data-act="content-doc" data-p="${p}" aria-pressed="${p===cur}">${esc(l)}</button>`).join("")}</div>
+   <textarea class="code" id="${id}" spellcheck="false" aria-label="JSON">${esc(JSON.stringify(val??{},null,1))}</textarea>
+   <div class="row"><button class="btn primary" data-act="save-json" data-p="${cur}" data-id="${id}">Save</button><span class="muted small">Must be valid JSON.</span></div></div>`;
+}
+function viewOrg(){
+  if(!isOrg()) return `<div class="stack"><h2>Organiser desk</h2><form class="sheet stack login" data-form="org-login"><p class="muted small">Enter the organiser PIN shown in the server window on the event laptop.</p><label class="f">Organiser PIN<input type="password" id="og-pin" inputmode="numeric" maxlength="20" autocomplete="off"></label><button class="btn primary" type="submit" style="align-self:start">Log in</button></form></div>`;
+  const tabs=[["run","Run"],["teams","Teams & entry"],["marking","Marking"],["judging","Judging"],["scores","Scores"],["content","Content"]];
+  const body={run:orgRun,teams:orgTeams,marking:orgMarking,judging:orgJudging,scores:orgScores,content:orgContent}[S.orgTab]();
+  return `<div class="stack"><div class="row" style="justify-content:space-between"><h2>Organiser desk</h2><button class="btn ghost sm" data-act="org-logout">Log out</button></div>
+   <div class="subtabs">${tabs.map(([k,l])=>`<button data-act="org-tab" data-t="${k}" aria-pressed="${S.orgTab===k}">${l}</button>`).join("")}</div>${body}</div>`;
+}
+
+/* ---------- projector ---------- */
+function renderProjector(){
+  const p=document.getElementById("proj");
+  p.hidden=!S.projector; if(!S.projector) return;
+  const s=st(), c=cfg(), pc=phaseClock(), last=(s.bulletins||[]).slice(-1)[0], rv=S.pub?.released?.reveal;
+  let h=`<div class="pwrap"><div class="ptop"><div class="ptitle">${esc(c.eventName||"")}</div><button class="btn" data-act="proj">Exit projector</button></div>
+   <div class="row" style="justify-content:space-between;align-items:flex-end;gap:24px"><div class="pphase">${esc(PHASES[s.phase]||"")}</div>${pc?`<div class="pclock" id="pclk">${mmss(pc.el)}</div>`:""}</div>`;
+  if(["setup","briefing"].includes(s.phase)) h+=`<div><div class="pnext">Join on your phone (same Wi-Fi)</div><div class="pjoin">${esc(joinUrl())}</div></div>`;
+  if(pc?.next) h+=`<div class="pnext">${esc(pc.next)}</div>`;
+  if(s.phase==="r2") h+=`<div class="pnext">${s.allocOpen?"Allocation window OPEN":"Allocation window closed"}</div>`;
+  if(last && ["r2","reveal"].includes(s.phase)) h+=`<div class="pnews"><div class="pnext">${esc(coName(last.company))}</div>${esc(last.text)}</div>`;
+  if(rv?.board && s.reveal>=3){
+    h+=`<table><thead><tr><th>#</th><th>Team</th><th class="n">Total</th><th class="n">Return</th></tr></thead><tbody>${rv.board.slice(0,10).map((r,i)=>`<tr><td>${i+1}</td><td>${esc(r.name)}</td><td class="n">${r.total.toFixed(1)}</td><td class="n">${r.ret>=0?"+":""}${r.ret.toFixed(1)}%</td></tr>`).join("")}</tbody></table>`;
+  } else if(rv?.outcomes && s.reveal>=2){
+    h+=`<table><tbody>${order().map(cid=>`<tr><td>${esc(coName(cid))}</td><td class="n">${rv.outcomes[cid]?.ret>=0?"+":""}${rv.outcomes[cid]?.ret}%</td></tr>`).join("")}</tbody></table>`;
+  }
+  h+=`</div>`;
+  if(p.innerHTML!==h) p.innerHTML=h;
+}
+
+/* ---------- render ---------- */
+let pendingRender=false;
+function render(){
+  renderHeader(); renderProjector();
+  const main=document.getElementById("main");
+  if(!S.pub){ return; }
+  const ae=document.activeElement;
+  if(ae && main.contains(ae) && /^(INPUT|TEXTAREA|SELECT)$/.test(ae.tagName)){ pendingRender=true; return; }
+  pendingRender=false;
+  const v=S.view;
+  const html = v==="companies"?viewCompanies(): v==="company"?viewCompany(S.company): v==="toolkit"?viewToolkit(): v==="news"?viewNews(): v==="team"?viewTeam(): v==="results"?viewResults(): v==="org"?viewOrg(): viewEvent();
+  if(main._last!==html){ main.innerHTML=html; main._last=html;
+    for(const [id,val] of Object.entries(drafts)){ const el=document.getElementById(id); if(el && el.value!==val) el.value=val; }
+    updateSums();
+  }
+}
+document.getElementById("main").addEventListener("focusout",()=>setTimeout(()=>{ if(pendingRender) render(); },0));
+document.addEventListener("input",e=>{ const el=e.target; if(el.id && /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName) && !el.dataset.judge) drafts[el.id]=el.value; if(el.id?.startsWith("al-")) updateSums(); });
+function updateSums(){
+  document.querySelectorAll('form[data-form="alloc"]').forEach(f=>{
+    const tid=f.dataset.tid; let t=0; order().forEach(cid=>{ const el=document.getElementById(`al-${tid}-${cid}`); if(el) t+=Number(el.value)||0; });
+    const s=document.getElementById("sum-"+tid); if(s){ s.textContent=`Allocated ${t}% · cash ${Math.max(0,100-t)}%`; s.classList.toggle("bad",t>100); }
+  });
+}
+function clearDrafts(prefix){ for(const k of Object.keys(drafts)) if(k.startsWith(prefix)) delete drafts[k]; }
+const val = id => (document.getElementById(id)?.value || "").trim();
+function showModal(html){ const m=document.getElementById("modal"); m.innerHTML=`<div class="box" role="dialog" aria-modal="true">${html}<button class="btn primary" data-act="close-modal" style="align-self:end">Close</button></div>`; m.hidden=false; }
+
+/* ---------- forms ---------- */
+document.addEventListener("submit",async e=>{
+  const f=e.target.closest("form[data-form]"); if(!f) return; e.preventDefault();
+  const kind=f.dataset.form, tid=f.dataset.tid, admin=f.dataset.admin==="1";
+  document.activeElement?.blur?.();
+  if(kind==="register"){
+    try{ const j=await api("/api/team/register",{name:val("rg-name"),members:val("rg-members"),pin:val("rg-pin")}); S.teamTok=j.token; lsSet("rfd-team",j.token); clearDrafts("rg-"); S.v=""; sync(); toast("Team registered"); }catch(err){ toast(err.message); }
+    return;
+  }
+  if(kind==="team-login"){
+    try{ const j=await api("/api/team/login",{name:val("lg-name"),pin:val("lg-pin")}); S.teamTok=j.token; lsSet("rfd-team",j.token); clearDrafts("lg-"); S.v=""; sync(); toast("Logged in"); }catch(err){ toast(err.message); }
+    return;
+  }
+  if(kind==="org-login"){
+    try{ const j=await api("/api/org/login",{pin:val("og-pin")}); S.orgTok=j.token; lsSet("rfd-org",j.token); clearDrafts("og-"); S.v=""; sync(); toast("Welcome to the organiser desk"); }catch(err){ toast(err.message); }
+    return;
+  }
+  if(kind==="desk-team"){
+    const j=await orgDo({act:"add_team",name:val("dt-name"),members:val("dt-members")},"Team added");
+    if(j){ clearDrafts("dt-"); S.selTeam=j.tid; }
+    return;
+  }
+  if(kind==="flag"){
+    const body={act:"flag",company:document.getElementById("fc-"+tid).value,issue:val("fi-"+tid),evidence:val("fe-"+tid)};
+    const fw=document.getElementById("fw-"+tid); if(fw) body.win=Number(fw.value);
+    const j = admin ? await orgDo({...body,tid},"Flag added") : await teamDo(body,"Flag added");
+    if(j){ delete drafts["fi-"+tid]; delete drafts["fe-"+tid]; ["fi-","fe-"].forEach(p=>{ const el=document.getElementById(p+tid); if(el) el.value=""; }); }
+    return;
+  }
+  if(kind==="alloc"){
+    const alloc={}, rationale={};
+    for(const cid of order()){ alloc[cid]=Number(document.getElementById(`al-${tid}-${cid}`).value)||0; rationale[cid]=document.getElementById(`ra-${tid}-${cid}`).value; }
+    const body={act:"alloc",alloc,rationale};
+    const j = admin ? await orgDo({...body,tid},"Portfolio saved") : await teamDo(body,"Portfolio saved");
+    if(j){ clearDrafts("al-"+tid); clearDrafts("ra-"+tid); }
+  }
+});
+
+/* ---------- clicks ---------- */
+document.addEventListener("click",async e=>{
+  const a=e.target.closest("[data-act]"); if(!a) return;
+  const act=a.dataset.act;
+  if(act==="nav"){ S.view=a.dataset.v; lsSet("rfd-view",S.view==="company"?"companies":S.view); window.scrollTo(0,0); render(); return; }
+  if(act==="open-co"){ S.company=a.dataset.c; S.view="company"; window.scrollTo(0,0); render(); return; }
+  if(act==="co-tab"){ S.ctab=a.dataset.t; render(); return; }
+  if(act==="org-tab"){ S.orgTab=a.dataset.t; render(); return; }
+  if(act==="proj"){ S.projector=!S.projector; try{ if(S.projector) await document.documentElement.requestFullscreen?.(); else if(document.fullscreenElement) await document.exitFullscreen(); }catch(_){} render(); return; }
+  if(act==="close-modal"){ document.getElementById("modal").hidden=true; return; }
+  if(act==="sel-team"){ S.selTeam=a.dataset.tid; render(); return; }
+  if(act==="content-doc"){ S.contentDoc=a.dataset.p; render(); return; }
+  if(act==="team-logout"){ S.teamTok=null; lsSet("rfd-team",null); S.team=null; S.v=""; sync(); return; }
+  if(act==="org-logout"){ S.orgTok=null; lsSet("rfd-org",null); S.org=null; S.role="public"; S.v=""; sync(); return; }
+  if(act==="arm"){
+    const k=a.dataset.k;
+    if(armed!==k){ armed=k; clearTimeout(armTimer); armTimer=setTimeout(()=>{armed=null;render();},4000); render(); return; }
+    armed=null; clearTimeout(armTimer);
+    if(k.startsWith("step:")) await orgDo({act:"step",k:k.slice(5)},"Done");
+    else if(k==="reset") await orgDo({act:"reset"},"Event reset");
+    else if(k==="reset-all") await orgDo({act:"reset",all:true},"Event reset");
+    else if(k.startsWith("delteam:")){ await orgDo({act:"del_team",tid:k.slice(8)},"Team deleted"); S.selTeam=null; }
+    render(); return;
+  }
+  if(act==="org"){ await orgDo({act:a.dataset.o,b:a.dataset.b}); return; }
+  if(act==="del-flag"){ const body={act:"delflag",fid:a.dataset.fid}; if(a.dataset.admin==="1") await orgDo({...body,tid:a.dataset.tid}); else await teamDo(body); return; }
+  if(act==="req-intel"){ const c=document.getElementById("ic-"+a.dataset.tid)?.value; if(c) await teamDo({act:"intel",company:c},"Clue requested"); return; }
+  if(act==="deliver"){ await orgDo({act:"deliver",tid:a.dataset.tid,company:a.dataset.c},"Clue delivered"); return; }
+  if(act==="sell-intel"){ const c=document.getElementById("si-"+a.dataset.tid)?.value; if(!c) return;
+    const j=await orgDo({act:"sell",tid:a.dataset.tid,company:c});
+    if(j?.clue) showModal(`<div class="eyebrow">Clue for ${esc(S.org?.teams?.[a.dataset.tid]?.name)} · ${esc(coName(c))}</div><h3>${esc(j.clue.title)}</h3><p class="lead">${esc(j.clue.text)}</p><p class="small muted">Read this out or copy it onto a slip.</p>`);
+    return; }
+  if(act==="team-pin"){ const tid=a.dataset.tid; if(await orgDo({act:"team_pin",tid,pin:val("tp-"+tid)},"Team PIN set")) delete drafts["tp-"+tid]; return; }
+  if(act==="set-org-pin"){ if(await orgDo({act:"set_org_pin",pin:val("org-newpin")},"Organiser PIN changed")) delete drafts["org-newpin"]; return; }
+  if(act==="save-json"){ const el=document.getElementById(a.dataset.id); let v; try{ v=JSON.parse(el.value); }catch(err){ toast("Not valid JSON: "+err.message); return; }
+    if(await orgDo({act:"save_doc",path:a.dataset.p,value:v},"Saved")) delete drafts[a.dataset.id]; return; }
+  if(act==="csv"){ const rows=[["Rank","Team","Raw forensic","Forensic /40","Return %","Portfolio /30","Rationale /30","Total"]].concat((S.org?.board||[]).map((r,i)=>[i+1,r.name,r.raw.toFixed(1),r.forensic.toFixed(1),r.ret.toFixed(1),r.portfolio.toFixed(1),r.rationale.toFixed(1),r.total.toFixed(1)]));
+    const csv=rows.map(r=>r.map(x=>`"${String(x).replace(/"/g,'""')}"`).join(",")).join("\n");
+    try{ await navigator.clipboard.writeText(csv); toast("Copied"); }catch(_){ showModal(`<h3>Leaderboard CSV</h3><textarea class="code" style="min-height:200px" readonly>${esc(csv)}</textarea>`); }
+    return; }
+});
+document.addEventListener("change",async e=>{
+  const el=e.target;
+  if(el.dataset.mark){ el.blur(); await orgDo({act:"mark",tid:el.dataset.mark,fid:el.dataset.fid,value:el.value}); }
+  if(el.dataset.judge){ await orgDo({act:"judge",tid:el.dataset.judge,j:Number(el.dataset.j),value:el.value}); }
+});
+document.addEventListener("keydown",e=>{ if(e.key==="Escape"){ if(!document.getElementById("modal").hidden) document.getElementById("modal").hidden=true; else if(S.projector){ S.projector=false; render(); } } });
+
+sync();
+})();
+</script>
+</body>
+</html>

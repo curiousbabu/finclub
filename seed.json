@@ -1,0 +1,2134 @@
+{
+ "config": {
+  "eventName": "Spot the Red Flag, Back the Right Company",
+  "clubName": "Finance Club",
+  "currency": "₹ crore",
+  "budget": 1000000,
+  "points": {
+   "easy": 2,
+   "medium": 3,
+   "hard": 5
+  },
+  "windowMult": [
+   1.5,
+   1.25,
+   1.0
+  ],
+  "falseAlarm": -1,
+  "intelCost": 2,
+  "fullMarksRaw": 67,
+  "durations": {
+   "briefing": 10,
+   "r1": 45,
+   "break": 10,
+   "r2": 40,
+   "reveal": 25
+  },
+  "releaseAt": [
+   0,
+   15,
+   30
+  ],
+  "order": [
+   "mithai",
+   "sundaram",
+   "voltgrid",
+   "brightpath",
+   "threadline",
+   "pinnacle"
+  ]
+ },
+ "profiles": {
+  "companies": {
+   "mithai": {
+    "name": "Mithai Express",
+    "tagline": "Regional sweets and snacks chain",
+    "sells": "Kaju katli, namkeen, festive gift boxes and a small café menu.",
+    "customers": "Families and office buyers; sales spike at Diwali and wedding season. Almost all sales are cash or UPI.",
+    "runs": "Founder-led. The Agarwal family owns 68% and runs the business day to day.",
+    "story": "Mithai Express has gone from 112 to 185 stores in two years across Gujarat, Maharashtra and Rajasthan, and plans 60 more next year."
+   },
+   "sundaram": {
+    "name": "Sundaram Auto Components",
+    "tagline": "30-year-old brake and clutch parts maker",
+    "sells": "Brake pads, clutch plates and brake assemblies made at two plants near Hosur.",
+    "customers": "Indian carmakers and two-wheeler makers, on multi-year supply contracts.",
+    "runs": "Second-generation family management with a professional CFO. Pays a dividend every year.",
+    "story": "A steady supplier that rarely makes headlines. It recently won its first order for brake systems designed for electric cars."
+   },
+   "voltgrid": {
+    "name": "VoltGrid",
+    "tagline": "EV charging network in metro cities",
+    "sells": "Fast-charging sessions at public stations in malls, office parks and highway exits.",
+    "customers": "Private EV owners, taxi fleets and delivery companies.",
+    "runs": "Two founders from the power sector, backed by climate-focused venture funds.",
+    "story": "VoltGrid more than doubled its network to over 1,000 chargers last year and has just closed a ₹300 cr funding round."
+   },
+   "brightpath": {
+    "name": "BrightPath EdTech",
+    "tagline": "Online test-prep platform",
+    "sells": "Video courses and mock tests for JEE, NEET and CAT, sold as one-year and multi-year bundles.",
+    "customers": "Students and parents, through the app and through partner tuition centres across tier-2 cities.",
+    "runs": "Founder-CEO and a well-known former coaching-institute teacher. Celebrity brand ambassador signed in FY26.",
+    "story": "BrightPath reported record profits last year and is talking to bankers about a stock market listing."
+   },
+   "threadline": {
+    "name": "ThreadLine",
+    "tagline": "Instagram-famous fast fashion brand",
+    "sells": "Trend-led women's and men's clothing, with new drops every two weeks.",
+    "customers": "18–30-year-olds, through 80 stores and a fast-growing online shop (22% of sales).",
+    "runs": "Founder and creative director with 2 million personal followers. The founder's family owns 64%.",
+    "story": "ThreadLine's festive campaigns regularly go viral, and the brand says it is now profitable and growing in every channel."
+   },
+   "pinnacle": {
+    "name": "Pinnacle Logistics",
+    "tagline": "Mid-sized freight and warehousing company",
+    "sells": "Full-truckload freight, warehousing and last-mile delivery for manufacturers and traders.",
+    "customers": "About 400 business clients across FMCG, electronics and trading companies.",
+    "runs": "Founder-chairman and a professional MD. Has paid a dividend for eight years.",
+    "story": "Pinnacle has grown revenue over 20% a year and recently bought a smaller trucking company to expand in the north."
+   }
+  }
+ },
+ "vault": {
+  "mithai": {
+   "id": "mithai",
+   "name": "Mithai Express",
+   "statements": {
+    "pl": [
+     {
+      "label": "Revenue from operations",
+      "fy25": 520,
+      "fy26": 680,
+      "kind": "always"
+     },
+     {
+      "label": "Cost of ingredients & packaging",
+      "fy25": 244.4,
+      "fy26": 329.8,
+      "kind": "always"
+     },
+     {
+      "label": "Employee benefit expenses",
+      "fy25": 72.8,
+      "fy26": 98.6,
+      "kind": "always"
+     },
+     {
+      "label": "Rent, utilities & other expenses",
+      "fy25": 114.4,
+      "fy26": 159.8,
+      "kind": "always"
+     },
+     {
+      "label": "EBITDA",
+      "fy25": 88.4,
+      "fy26": 91.8,
+      "kind": "total"
+     },
+     {
+      "label": "Depreciation & amortisation",
+      "fy25": 30,
+      "fy26": 42,
+      "kind": "always"
+     },
+     {
+      "label": "Finance costs",
+      "fy25": 6,
+      "fy26": 13,
+      "kind": "always"
+     },
+     {
+      "label": "Other income",
+      "fy25": 2,
+      "fy26": 2,
+      "kind": "always"
+     },
+     {
+      "label": "Profit before tax",
+      "fy25": 54.4,
+      "fy26": 38.8,
+      "kind": "total"
+     },
+     {
+      "label": "Tax expense",
+      "fy25": 13.6,
+      "fy26": 9.7,
+      "kind": "always"
+     },
+     {
+      "label": "Net profit / (loss)",
+      "fy25": 40.8,
+      "fy26": 29.1,
+      "kind": "grand"
+     }
+    ],
+    "bs": [
+     {
+      "label": "ASSETS",
+      "kind": "head"
+     },
+     {
+      "label": "Property, plant & equipment (net)",
+      "fy25": 240,
+      "fy26": 348,
+      "kind": "always"
+     },
+     {
+      "label": "Security deposits for leased stores",
+      "fy25": 26,
+      "fy26": 35,
+      "kind": "always"
+     },
+     {
+      "label": "Inventories",
+      "fy25": 30,
+      "fy26": 40,
+      "kind": "opt"
+     },
+     {
+      "label": "Trade receivables",
+      "fy25": 6,
+      "fy26": 8,
+      "kind": "always"
+     },
+     {
+      "label": "Other current assets",
+      "fy25": 12,
+      "fy26": 15,
+      "kind": "always"
+     },
+     {
+      "label": "Cash & bank balances",
+      "fy25": 38.8,
+      "fy26": 49.9,
+      "kind": "always"
+     },
+     {
+      "label": "Total assets",
+      "fy25": 352.8,
+      "fy26": 495.9,
+      "kind": "grand"
+     },
+     {
+      "label": "EQUITY & LIABILITIES",
+      "kind": "head"
+     },
+     {
+      "label": "Shareholders' equity",
+      "fy25": 200.8,
+      "fy26": 224.9,
+      "kind": "always"
+     },
+     {
+      "label": "Borrowings",
+      "fy25": 100,
+      "fy26": 205,
+      "kind": "always"
+     },
+     {
+      "label": "Trade payables",
+      "fy25": 35,
+      "fy26": 44,
+      "kind": "always"
+     },
+     {
+      "label": "Other current liabilities",
+      "fy25": 17,
+      "fy26": 22,
+      "kind": "always"
+     },
+     {
+      "label": "Total equity & liabilities",
+      "fy25": 352.8,
+      "fy26": 495.9,
+      "kind": "grand"
+     }
+    ],
+    "cf": [
+     {
+      "label": "Net profit / (loss)",
+      "fy25": 40.8,
+      "fy26": 29.1,
+      "kind": "always"
+     },
+     {
+      "label": "Add: depreciation & amortisation",
+      "fy25": 30,
+      "fy26": 42,
+      "kind": "always"
+     },
+     {
+      "label": "(Increase)/decrease in inventories",
+      "fy25": -5,
+      "fy26": -10,
+      "kind": "opt"
+     },
+     {
+      "label": "(Increase)/decrease in receivables",
+      "fy25": -1,
+      "fy26": -2,
+      "kind": "always"
+     },
+     {
+      "label": "(Increase)/decrease in other current assets",
+      "fy25": -2,
+      "fy26": -3,
+      "kind": "always"
+     },
+     {
+      "label": "Increase/(decrease) in payables",
+      "fy25": 5,
+      "fy26": 9,
+      "kind": "always"
+     },
+     {
+      "label": "Increase/(decrease) in other current liabilities",
+      "fy25": 2,
+      "fy26": 5,
+      "kind": "always"
+     },
+     {
+      "label": "Cash from operating activities",
+      "fy25": 69.8,
+      "fy26": 70.1,
+      "kind": "total"
+     },
+     {
+      "label": "Purchase of property, plant & equipment",
+      "fy25": -90,
+      "fy26": -150,
+      "kind": "always"
+     },
+     {
+      "label": "Other investments / deposits",
+      "fy25": -6,
+      "fy26": -9,
+      "kind": "opt"
+     },
+     {
+      "label": "Cash from investing activities",
+      "fy25": -96,
+      "fy26": -159,
+      "kind": "total"
+     },
+     {
+      "label": "Net borrowings / (repayments)",
+      "fy25": 40,
+      "fy26": 105,
+      "kind": "always"
+     },
+     {
+      "label": "Dividends paid",
+      "fy25": -5,
+      "fy26": -5,
+      "kind": "opt"
+     },
+     {
+      "label": "Cash from financing activities",
+      "fy25": 35,
+      "fy26": 100,
+      "kind": "total"
+     },
+     {
+      "label": "Net change in cash",
+      "fy25": 8.8,
+      "fy26": 11.1,
+      "kind": "total"
+     },
+     {
+      "label": "Opening cash",
+      "fy25": 30,
+      "fy26": 38.8,
+      "kind": "always"
+     },
+     {
+      "label": "Closing cash",
+      "fy25": 38.8,
+      "fy26": 49.9,
+      "kind": "grand"
+     }
+    ],
+    "notes": [
+     "Store count: 112 at end of FY24, 140 at end of FY25, 185 at end of FY26.",
+     "Same-store sales growth (stores open more than 12 months): +6% in FY25, −3% in FY26. Management attributes the decline to 'new stores drawing customers from nearby older outlets'.",
+     "Leases: 38 stores opened in FY26 are on 9-year leases with a 5-year lock-in. Minimum lease payments the company cannot avoid over the next five years total ₹410 cr.",
+     "Borrowings: ₹105 cr of new term loans taken in FY26 at 9.5% interest, secured on store fit-outs.",
+     "Pre-opening costs of ₹14 cr (staff training, launch events) were expensed in FY26, not capitalised.",
+     "No shares held by the promoter family are pledged."
+    ],
+    "auditor": "Unmodified opinion. The financial statements give a true and fair view. No emphasis of matter."
+   },
+   "key": [
+    {
+     "id": "m1",
+     "stage": 1,
+     "diff": "easy",
+     "title": "Margins squeezed: profit fell despite 31% sales growth",
+     "evidence": "EBITDA margin fell from 17.0% to 13.5%; net profit fell from ₹40.8 cr to ₹29.1 cr while revenue rose ₹520 cr → ₹680 cr."
+    },
+    {
+     "id": "m2",
+     "stage": 1,
+     "diff": "easy",
+     "title": "Borrowings doubled and interest cost more than doubled",
+     "evidence": "Borrowings ₹100 cr → ₹205 cr; finance costs ₹6 cr → ₹13 cr."
+    },
+    {
+     "id": "m3",
+     "stage": 2,
+     "diff": "medium",
+     "title": "Expansion funded with debt, not cash generation",
+     "evidence": "Capex ₹150 cr vs operating cash flow ₹70 cr; gap filled by ₹105 cr of new borrowing."
+    },
+    {
+     "id": "m4",
+     "stage": 3,
+     "diff": "medium",
+     "title": "Same-store sales turned negative",
+     "evidence": "Note 2: same-store sales −3% in FY26. All growth comes from new stores, which also cannibalise old ones."
+    },
+    {
+     "id": "m5",
+     "stage": 3,
+     "diff": "hard",
+     "title": "Lease lock-ins make it hard to close weak stores",
+     "evidence": "Note 3: ₹410 cr of unavoidable lease payments over five years on 9-year leases with 5-year lock-ins."
+    }
+   ],
+   "traps": [
+    "Pre-opening costs expensed (conservative accounting, not a problem)",
+    "Tiny receivables (normal for a cash retail business)",
+    "Inventory rising in line with store count"
+   ],
+   "intel": {
+    "title": "Peer comparison: sweets and QSR chains",
+    "text": "Listed sweets and quick-service chains averaged +5% same-store sales growth in FY26, an EBITDA margin of about 17%, and net debt of about 1.2× EBITDA."
+   },
+   "outcome": {
+    "ret": -6,
+    "story": "Opened just 12 stores as cash got tight. Same-store sales stayed slightly negative and profit was flat. Shares drifted lower, but the business is intact."
+   }
+  },
+  "sundaram": {
+   "id": "sundaram",
+   "name": "Sundaram Auto Components",
+   "statements": {
+    "pl": [
+     {
+      "label": "Revenue from operations",
+      "fy25": 900,
+      "fy26": 960,
+      "kind": "always"
+     },
+     {
+      "label": "Cost of materials (steel, castings)",
+      "fy25": 558.0,
+      "fy26": 619.2,
+      "kind": "always"
+     },
+     {
+      "label": "Employee benefit expenses",
+      "fy25": 99.0,
+      "fy26": 105.6,
+      "kind": "always"
+     },
+     {
+      "label": "Other expenses",
+      "fy25": 108.0,
+      "fy26": 115.2,
+      "kind": "always"
+     },
+     {
+      "label": "EBITDA",
+      "fy25": 135.0,
+      "fy26": 120.0,
+      "kind": "total"
+     },
+     {
+      "label": "Depreciation & amortisation",
+      "fy25": 35,
+      "fy26": 37,
+      "kind": "always"
+     },
+     {
+      "label": "Finance costs",
+      "fy25": 7,
+      "fy26": 5,
+      "kind": "always"
+     },
+     {
+      "label": "Other income",
+      "fy25": 6,
+      "fy26": 6,
+      "kind": "always"
+     },
+     {
+      "label": "Exceptional item: gain on sale of land",
+      "fy25": 0,
+      "fy26": 28,
+      "kind": "opt"
+     },
+     {
+      "label": "Profit before tax",
+      "fy25": 99.0,
+      "fy26": 112.0,
+      "kind": "total"
+     },
+     {
+      "label": "Tax expense",
+      "fy25": 24.8,
+      "fy26": 28.0,
+      "kind": "always"
+     },
+     {
+      "label": "Net profit / (loss)",
+      "fy25": 74.2,
+      "fy26": 84.0,
+      "kind": "grand"
+     }
+    ],
+    "bs": [
+     {
+      "label": "ASSETS",
+      "kind": "head"
+     },
+     {
+      "label": "Property, plant & equipment (net)",
+      "fy25": 315,
+      "fy26": 326,
+      "kind": "always"
+     },
+     {
+      "label": "Other non-current assets",
+      "fy25": 40,
+      "fy26": 40,
+      "kind": "always"
+     },
+     {
+      "label": "Inventories",
+      "fy25": 74,
+      "fy26": 78,
+      "kind": "opt"
+     },
+     {
+      "label": "Trade receivables",
+      "fy25": 115,
+      "fy26": 120,
+      "kind": "always"
+     },
+     {
+      "label": "Other current assets",
+      "fy25": 21,
+      "fy26": 22,
+      "kind": "always"
+     },
+     {
+      "label": "Cash & bank balances",
+      "fy25": 66.2,
+      "fy26": 75.2,
+      "kind": "always"
+     },
+     {
+      "label": "Total assets",
+      "fy25": 631.2,
+      "fy26": 661.2,
+      "kind": "grand"
+     },
+     {
+      "label": "EQUITY & LIABILITIES",
+      "kind": "head"
+     },
+     {
+      "label": "Shareholders' equity",
+      "fy25": 444.2,
+      "fy26": 493.2,
+      "kind": "always"
+     },
+     {
+      "label": "Borrowings",
+      "fy25": 60,
+      "fy26": 35,
+      "kind": "always"
+     },
+     {
+      "label": "Trade payables",
+      "fy25": 95,
+      "fy26": 100,
+      "kind": "always"
+     },
+     {
+      "label": "Other current liabilities",
+      "fy25": 32,
+      "fy26": 33,
+      "kind": "always"
+     },
+     {
+      "label": "Total equity & liabilities",
+      "fy25": 631.2,
+      "fy26": 661.2,
+      "kind": "grand"
+     }
+    ],
+    "cf": [
+     {
+      "label": "Net profit / (loss)",
+      "fy25": 74.2,
+      "fy26": 84.0,
+      "kind": "always"
+     },
+     {
+      "label": "Add: depreciation & amortisation",
+      "fy25": 35,
+      "fy26": 37,
+      "kind": "always"
+     },
+     {
+      "label": "Less: gain on sale of assets",
+      "fy25": 0,
+      "fy26": -28,
+      "kind": "opt"
+     },
+     {
+      "label": "(Increase)/decrease in inventories",
+      "fy25": -4,
+      "fy26": -4,
+      "kind": "opt"
+     },
+     {
+      "label": "(Increase)/decrease in receivables",
+      "fy25": -5,
+      "fy26": -5,
+      "kind": "always"
+     },
+     {
+      "label": "(Increase)/decrease in other current assets",
+      "fy25": -1,
+      "fy26": -1,
+      "kind": "always"
+     },
+     {
+      "label": "Increase/(decrease) in payables",
+      "fy25": 5,
+      "fy26": 5,
+      "kind": "always"
+     },
+     {
+      "label": "Increase/(decrease) in other current liabilities",
+      "fy25": 2,
+      "fy26": 1,
+      "kind": "always"
+     },
+     {
+      "label": "Cash from operating activities",
+      "fy25": 106.2,
+      "fy26": 89.0,
+      "kind": "total"
+     },
+     {
+      "label": "Purchase of property, plant & equipment",
+      "fy25": -50,
+      "fy26": -55,
+      "kind": "always"
+     },
+     {
+      "label": "Proceeds from sale of assets",
+      "fy25": 0,
+      "fy26": 35,
+      "kind": "opt"
+     },
+     {
+      "label": "Cash from investing activities",
+      "fy25": -50,
+      "fy26": -20,
+      "kind": "total"
+     },
+     {
+      "label": "Net borrowings / (repayments)",
+      "fy25": -20,
+      "fy26": -25,
+      "kind": "always"
+     },
+     {
+      "label": "Dividends paid",
+      "fy25": -30,
+      "fy26": -35,
+      "kind": "opt"
+     },
+     {
+      "label": "Cash from financing activities",
+      "fy25": -50,
+      "fy26": -60,
+      "kind": "total"
+     },
+     {
+      "label": "Net change in cash",
+      "fy25": 6.2,
+      "fy26": 9.0,
+      "kind": "total"
+     },
+     {
+      "label": "Opening cash",
+      "fy25": 60,
+      "fy26": 66.2,
+      "kind": "always"
+     },
+     {
+      "label": "Closing cash",
+      "fy25": 66.2,
+      "fy26": 75.2,
+      "kind": "grand"
+     }
+    ],
+    "notes": [
+     "Customer concentration: the largest customer (a leading passenger-car maker) accounted for 41% of FY26 revenue; the top three customers for 72%. Supply contracts with all three run to FY29.",
+     "Exceptional item: a ₹28 cr gain on the sale of surplus land at Hosur (sale proceeds ₹35 cr, book value ₹7 cr). This is non-recurring. Excluding it, profit before tax fell from ₹98.9 cr to ₹84.0 cr.",
+     "Steel prices rose about 14% in FY26. Contracts allow price increases to be passed to customers with a one-quarter lag.",
+     "Receivable days were about 46 in both years.",
+     "Borrowings were reduced to ₹35 cr. The dividend was raised to ₹35 cr.",
+     "Order book includes a first contract for EV brake systems, starting FY27."
+    ],
+    "auditor": "Unmodified opinion. Key audit matter: revenue recognition on customer price revisions. No exceptions noted."
+   },
+   "key": [
+    {
+     "id": "s1",
+     "stage": 1,
+     "diff": "medium",
+     "title": "FY26 profit boosted by a one-off land sale",
+     "evidence": "₹28 cr exceptional gain in the P&L. Without it, profit before tax fell from ₹98.9 cr to ₹84 cr."
+    },
+    {
+     "id": "s2",
+     "stage": 1,
+     "diff": "easy",
+     "title": "Gross margin squeezed by raw material costs",
+     "evidence": "Material costs rose from 62% to 64.5% of revenue; EBITDA margin from 15.0% to 12.5%."
+    },
+    {
+     "id": "s3",
+     "stage": 3,
+     "diff": "medium",
+     "title": "Heavy customer concentration",
+     "evidence": "Note 1: one customer is 41% of revenue; the top three are 72%."
+    }
+   ],
+   "traps": [
+    "Falling debt and higher dividend (signs of strength)",
+    "Operating cash flow slightly lower (the land gain is removed from it, as it should be)",
+    "Receivables growing in line with sales"
+   ],
+   "intel": {
+    "title": "Peer comparison: auto component suppliers",
+    "text": "Listed brake and clutch suppliers averaged an EBITDA margin of about 13%, receivable days of about 60, and net debt to equity of about 0.3× in FY26."
+   },
+   "outcome": {
+    "ret": 18,
+    "story": "Steel prices eased and the delayed price increases came through, restoring margins. The EV brake contract started on time. A quiet, solid year."
+   }
+  },
+  "voltgrid": {
+   "id": "voltgrid",
+   "name": "VoltGrid",
+   "statements": {
+    "pl": [
+     {
+      "label": "Revenue from operations",
+      "fy25": 40,
+      "fy26": 85,
+      "kind": "always"
+     },
+     {
+      "label": "Electricity & site costs",
+      "fy25": 28,
+      "fy26": 56.1,
+      "kind": "always"
+     },
+     {
+      "label": "Employee benefit expenses",
+      "fy25": 25,
+      "fy26": 38,
+      "kind": "always"
+     },
+     {
+      "label": "Site leases, marketing & other expenses",
+      "fy25": 30,
+      "fy26": 45,
+      "kind": "always"
+     },
+     {
+      "label": "EBITDA",
+      "fy25": -43,
+      "fy26": -54.1,
+      "kind": "total"
+     },
+     {
+      "label": "Depreciation & amortisation",
+      "fy25": 18,
+      "fy26": 30,
+      "kind": "always"
+     },
+     {
+      "label": "Finance costs",
+      "fy25": 3,
+      "fy26": 6,
+      "kind": "always"
+     },
+     {
+      "label": "Other income",
+      "fy25": 4,
+      "fy26": 6,
+      "kind": "always"
+     },
+     {
+      "label": "Profit before tax",
+      "fy25": -60,
+      "fy26": -84.1,
+      "kind": "total"
+     },
+     {
+      "label": "Tax expense",
+      "fy25": 0.0,
+      "fy26": 0.0,
+      "kind": "always"
+     },
+     {
+      "label": "Net profit / (loss)",
+      "fy25": -60.0,
+      "fy26": -84.1,
+      "kind": "grand"
+     }
+    ],
+    "bs": [
+     {
+      "label": "ASSETS",
+      "kind": "head"
+     },
+     {
+      "label": "Charging stations & equipment (net)",
+      "fy25": 213,
+      "fy26": 364,
+      "kind": "always"
+     },
+     {
+      "label": "Software platform",
+      "fy25": 4,
+      "fy26": 3,
+      "kind": "opt"
+     },
+     {
+      "label": "Other non-current assets",
+      "fy25": 10,
+      "fy26": 10,
+      "kind": "always"
+     },
+     {
+      "label": "Inventories",
+      "fy25": 10,
+      "fy26": 14,
+      "kind": "opt"
+     },
+     {
+      "label": "Trade receivables",
+      "fy25": 6,
+      "fy26": 11,
+      "kind": "always"
+     },
+     {
+      "label": "Other current assets",
+      "fy25": 8,
+      "fy26": 12,
+      "kind": "always"
+     },
+     {
+      "label": "Cash & bank balances",
+      "fy25": 89.0,
+      "fy26": 195.9,
+      "kind": "always"
+     },
+     {
+      "label": "Total assets",
+      "fy25": 340.0,
+      "fy26": 609.9,
+      "kind": "grand"
+     },
+     {
+      "label": "EQUITY & LIABILITIES",
+      "kind": "head"
+     },
+     {
+      "label": "Shareholders' equity",
+      "fy25": 260.0,
+      "fy26": 475.9,
+      "kind": "always"
+     },
+     {
+      "label": "Borrowings",
+      "fy25": 50,
+      "fy26": 90,
+      "kind": "always"
+     },
+     {
+      "label": "Trade payables",
+      "fy25": 20,
+      "fy26": 30,
+      "kind": "always"
+     },
+     {
+      "label": "Other current liabilities",
+      "fy25": 10,
+      "fy26": 14,
+      "kind": "always"
+     },
+     {
+      "label": "Total equity & liabilities",
+      "fy25": 340.0,
+      "fy26": 609.9,
+      "kind": "grand"
+     }
+    ],
+    "cf": [
+     {
+      "label": "Net profit / (loss)",
+      "fy25": -60.0,
+      "fy26": -84.1,
+      "kind": "always"
+     },
+     {
+      "label": "Add: depreciation & amortisation",
+      "fy25": 18,
+      "fy26": 30,
+      "kind": "always"
+     },
+     {
+      "label": "(Increase)/decrease in inventories",
+      "fy25": -2,
+      "fy26": -4,
+      "kind": "opt"
+     },
+     {
+      "label": "(Increase)/decrease in receivables",
+      "fy25": -2,
+      "fy26": -5,
+      "kind": "always"
+     },
+     {
+      "label": "(Increase)/decrease in other current assets",
+      "fy25": -2,
+      "fy26": -4,
+      "kind": "always"
+     },
+     {
+      "label": "Increase/(decrease) in payables",
+      "fy25": 5,
+      "fy26": 10,
+      "kind": "always"
+     },
+     {
+      "label": "Increase/(decrease) in other current liabilities",
+      "fy25": 2,
+      "fy26": 4,
+      "kind": "always"
+     },
+     {
+      "label": "Cash from operating activities",
+      "fy25": -41.0,
+      "fy26": -53.1,
+      "kind": "total"
+     },
+     {
+      "label": "Purchase of property, plant & equipment",
+      "fy25": -110,
+      "fy26": -180,
+      "kind": "always"
+     },
+     {
+      "label": "Cash from investing activities",
+      "fy25": -110,
+      "fy26": -180,
+      "kind": "total"
+     },
+     {
+      "label": "Net borrowings / (repayments)",
+      "fy25": 20,
+      "fy26": 40,
+      "kind": "always"
+     },
+     {
+      "label": "Equity shares issued",
+      "fy25": 0,
+      "fy26": 300,
+      "kind": "opt"
+     },
+     {
+      "label": "Cash from financing activities",
+      "fy25": 20,
+      "fy26": 340,
+      "kind": "total"
+     },
+     {
+      "label": "Net change in cash",
+      "fy25": -131.0,
+      "fy26": 106.9,
+      "kind": "total"
+     },
+     {
+      "label": "Opening cash",
+      "fy25": 220,
+      "fy26": 89.0,
+      "kind": "always"
+     },
+     {
+      "label": "Closing cash",
+      "fy25": 89.0,
+      "fy26": 195.9,
+      "kind": "grand"
+     }
+    ],
+    "notes": [
+     "Network: 410 chargers at end of FY25, 1,050 at end of FY26, across six metros.",
+     "Average charger utilisation was 9% in FY25 and 14% in FY26. Management estimates stations break even at about 20% utilisation.",
+     "Raised ₹300 cr of equity (Series C) in FY26. Cash at year end: ₹196 cr.",
+     "Combined operating and capital spending in FY26 was about ₹233 cr. Management plans to cut capex to about ₹90 cr in FY27.",
+     "Borrowings include a ₹40 cr term loan with a covenant requiring minimum cash of ₹60 cr at all times.",
+     "Gross margin (revenue less electricity and site costs) improved from 30% to 34% as tariffs were renegotiated."
+    ],
+    "auditor": "Unmodified opinion. The financial statements are prepared on a going-concern basis; the auditor notes the FY26 equity raise in reaching this view."
+   },
+   "key": [
+    {
+     "id": "v1",
+     "stage": 1,
+     "diff": "easy",
+     "title": "Losses widening as the network grows",
+     "evidence": "Net loss grew from ₹60 cr to ₹84 cr."
+    },
+    {
+     "id": "v2",
+     "stage": 2,
+     "diff": "medium",
+     "title": "Cash runway under a year without new funding",
+     "evidence": "Operating cash outflow ₹53 cr plus capex ₹180 cr; cash ₹196 cr at year end."
+    },
+    {
+     "id": "v3",
+     "stage": 3,
+     "diff": "medium",
+     "title": "Utilisation still below breakeven",
+     "evidence": "Note 2: utilisation 14% vs an estimated 20% breakeven."
+    },
+    {
+     "id": "v4",
+     "stage": 3,
+     "diff": "hard",
+     "title": "Minimum-cash covenant could be breached",
+     "evidence": "Note 5: ₹60 cr minimum cash covenant; at the current burn the company would hit it within about 7 months."
+    }
+   ],
+   "traps": [
+    "Large capex (building chargers is the business model)",
+    "Revenue small compared with assets (early-stage network)",
+    "Fresh equity raised (honest funding, disclosed clearly)",
+    "Receivables rising fast from a tiny base"
+   ],
+   "intel": {
+    "title": "Peer comparison: EV charging operators",
+    "text": "Global listed charging operators report average utilisation of 12–15%, and most are still loss-making. Those that reached 20%+ utilisation turned EBITDA-positive."
+   },
+   "outcome": {
+    "ret": 28,
+    "story": "Signed a dedicated-charger deal with a ride-hailing fleet. Utilisation reached 19% and the next funding round was raised at a higher valuation. A risky bet that paid off this time."
+   }
+  },
+  "brightpath": {
+   "id": "brightpath",
+   "name": "BrightPath EdTech",
+   "statements": {
+    "pl": [
+     {
+      "label": "Revenue from operations",
+      "fy25": 240,
+      "fy26": 380,
+      "kind": "always"
+     },
+     {
+      "label": "Hosting & content delivery",
+      "fy25": 40,
+      "fy26": 58,
+      "kind": "always"
+     },
+     {
+      "label": "Employee benefit expenses",
+      "fy25": 70,
+      "fy26": 85,
+      "kind": "always"
+     },
+     {
+      "label": "Advertising, promotion & other expenses",
+      "fy25": 95,
+      "fy26": 150,
+      "kind": "always"
+     },
+     {
+      "label": "EBITDA",
+      "fy25": 35,
+      "fy26": 87,
+      "kind": "total"
+     },
+     {
+      "label": "Depreciation & amortisation",
+      "fy25": 14,
+      "fy26": 17,
+      "kind": "always"
+     },
+     {
+      "label": "Finance costs",
+      "fy25": 0,
+      "fy26": 2,
+      "kind": "always"
+     },
+     {
+      "label": "Other income",
+      "fy25": 6,
+      "fy26": 8,
+      "kind": "always"
+     },
+     {
+      "label": "Profit before tax",
+      "fy25": 27,
+      "fy26": 76,
+      "kind": "total"
+     },
+     {
+      "label": "Tax expense",
+      "fy25": 6.8,
+      "fy26": 19.0,
+      "kind": "always"
+     },
+     {
+      "label": "Net profit / (loss)",
+      "fy25": 20.2,
+      "fy26": 57.0,
+      "kind": "grand"
+     }
+    ],
+    "bs": [
+     {
+      "label": "ASSETS",
+      "kind": "head"
+     },
+     {
+      "label": "Property, plant & equipment (net)",
+      "fy25": 17,
+      "fy26": 20,
+      "kind": "always"
+     },
+     {
+      "label": "Capitalised content development",
+      "fy25": 75,
+      "fy26": 193,
+      "kind": "opt"
+     },
+     {
+      "label": "Other non-current assets",
+      "fy25": 5,
+      "fy26": 5,
+      "kind": "always"
+     },
+     {
+      "label": "Trade receivables",
+      "fy25": 45,
+      "fy26": 120,
+      "kind": "always"
+     },
+     {
+      "label": "Other current assets",
+      "fy25": 14,
+      "fy26": 20,
+      "kind": "always"
+     },
+     {
+      "label": "Cash & bank balances",
+      "fy25": 62.2,
+      "fy26": 57.2,
+      "kind": "always"
+     },
+     {
+      "label": "Total assets",
+      "fy25": 218.2,
+      "fy26": 415.2,
+      "kind": "grand"
+     },
+     {
+      "label": "EQUITY & LIABILITIES",
+      "kind": "head"
+     },
+     {
+      "label": "Shareholders' equity",
+      "fy25": 145.2,
+      "fy26": 282.2,
+      "kind": "always"
+     },
+     {
+      "label": "Borrowings",
+      "fy25": 0,
+      "fy26": 60,
+      "kind": "always"
+     },
+     {
+      "label": "Trade payables",
+      "fy25": 18,
+      "fy26": 25,
+      "kind": "always"
+     },
+     {
+      "label": "Deferred revenue & other liabilities",
+      "fy25": 55,
+      "fy26": 48,
+      "kind": "always"
+     },
+     {
+      "label": "Total equity & liabilities",
+      "fy25": 218.2,
+      "fy26": 415.2,
+      "kind": "grand"
+     }
+    ],
+    "cf": [
+     {
+      "label": "Net profit / (loss)",
+      "fy25": 20.2,
+      "fy26": 57.0,
+      "kind": "always"
+     },
+     {
+      "label": "Add: depreciation & amortisation",
+      "fy25": 14,
+      "fy26": 17,
+      "kind": "always"
+     },
+     {
+      "label": "(Increase)/decrease in receivables",
+      "fy25": -25,
+      "fy26": -75,
+      "kind": "always"
+     },
+     {
+      "label": "(Increase)/decrease in other current assets",
+      "fy25": -4,
+      "fy26": -6,
+      "kind": "always"
+     },
+     {
+      "label": "Increase/(decrease) in payables",
+      "fy25": 3,
+      "fy26": 7,
+      "kind": "always"
+     },
+     {
+      "label": "Increase/(decrease) in other current liabilities",
+      "fy25": -5,
+      "fy26": -7,
+      "kind": "always"
+     },
+     {
+      "label": "Cash from operating activities",
+      "fy25": 3.2,
+      "fy26": -7.0,
+      "kind": "total"
+     },
+     {
+      "label": "Purchase of property, plant & equipment",
+      "fy25": -6,
+      "fy26": -8,
+      "kind": "always"
+     },
+     {
+      "label": "Content development costs capitalised",
+      "fy25": -45,
+      "fy26": -130,
+      "kind": "opt"
+     },
+     {
+      "label": "Cash from investing activities",
+      "fy25": -51,
+      "fy26": -138,
+      "kind": "total"
+     },
+     {
+      "label": "Net borrowings / (repayments)",
+      "fy25": 0,
+      "fy26": 60,
+      "kind": "always"
+     },
+     {
+      "label": "Equity shares issued",
+      "fy25": 0,
+      "fy26": 80,
+      "kind": "opt"
+     },
+     {
+      "label": "Cash from financing activities",
+      "fy25": 0,
+      "fy26": 140,
+      "kind": "total"
+     },
+     {
+      "label": "Net change in cash",
+      "fy25": -47.8,
+      "fy26": -5.0,
+      "kind": "total"
+     },
+     {
+      "label": "Opening cash",
+      "fy25": 110,
+      "fy26": 62.2,
+      "kind": "always"
+     },
+     {
+      "label": "Closing cash",
+      "fy25": 62.2,
+      "fy26": 57.2,
+      "kind": "grand"
+     }
+    ],
+    "notes": [
+     "Revenue recognition: from 1 April 2025, multi-year course bundles are recognised in full when the student activates the account. Previously they were recognised over the subscription period. Under the old policy FY26 revenue would have been about ₹318 cr.",
+     "Content development: the company capitalises the cost of producing video lectures, including salaries of faculty and editors. ₹130 cr was capitalised in FY26 (FY25: ₹45 cr), of which ₹74 cr was employee cost.",
+     "From FY26 the useful life of capitalised content was extended from 3 years to 10 years. This reduced the amortisation charge by about ₹21 cr.",
+     "Trade receivables (₹120 cr) are mainly from channel partners (tuition centres that sell courses on BrightPath's behalf). ₹48 cr is due from EduReach Partners LLP, in which the spouse of a director is a partner. ₹52 cr has been outstanding for more than 180 days.",
+     "Raised ₹80 cr by issuing shares to an investment fund, and ₹60 cr of new borrowings.",
+     "Advertising includes ₹38 cr for a celebrity ambassador contract."
+    ],
+    "auditor": "Unmodified opinion, with an Emphasis of Matter drawing attention to Note 1 (change in revenue recognition) and Note 3 (change in the useful life of content). Key audit matter: recoverability of receivables from channel partners."
+   },
+   "key": [
+    {
+     "id": "b1",
+     "stage": 1,
+     "diff": "easy",
+     "title": "Receivables grew far faster than revenue",
+     "evidence": "Receivables ₹45 cr → ₹120 cr (+167%) while revenue grew 58%. Receivable days about 115."
+    },
+    {
+     "id": "b2",
+     "stage": 1,
+     "diff": "medium",
+     "title": "Capitalised content ballooning: costs moved off the P&L",
+     "evidence": "Capitalised content asset ₹75 cr → ₹193 cr."
+    },
+    {
+     "id": "b3",
+     "stage": 1,
+     "diff": "hard",
+     "title": "Deferred revenue fell while revenue jumped",
+     "evidence": "Deferred revenue line fell ₹55 cr → ₹48 cr despite 58% sales growth: revenue is being pulled forward."
+    },
+    {
+     "id": "b4",
+     "stage": 2,
+     "diff": "easy",
+     "title": "Record profit but negative operating cash flow",
+     "evidence": "Net profit ₹57 cr vs operating cash flow −₹7 cr; spending funded by new debt and equity."
+    },
+    {
+     "id": "b5",
+     "stage": 3,
+     "diff": "medium",
+     "title": "Revenue recognition changed to upfront",
+     "evidence": "Note 1: multi-year bundles now booked on activation; old policy gives ~₹318 cr revenue."
+    },
+    {
+     "id": "b6",
+     "stage": 3,
+     "diff": "hard",
+     "title": "Amortisation life stretched from 3 to 10 years",
+     "evidence": "Note 3: cut amortisation by ~₹21 cr, flattering profit."
+    },
+    {
+     "id": "b7",
+     "stage": 3,
+     "diff": "hard",
+     "title": "Related-party and overdue receivables",
+     "evidence": "Note 4: ₹48 cr due from a firm linked to a director's spouse; ₹52 cr over 180 days."
+    },
+    {
+     "id": "b8",
+     "stage": 3,
+     "diff": "medium",
+     "title": "Auditor emphasis of matter",
+     "evidence": "Auditor flags the policy changes and receivable recoverability."
+    }
+   ],
+   "traps": [
+    "High advertising spend (normal for consumer edtech)",
+    "Celebrity ambassador contract",
+    "Fresh equity raised"
+   ],
+   "intel": {
+    "title": "Peer comparison: listed edtech",
+    "text": "Listed edtech peers capitalise 10–15% of their content spend and amortise it over 3 years. Their receivable days average about 25, and deferred revenue usually grows with sales."
+   },
+   "outcome": {
+    "ret": -62,
+    "story": "The listing was shelved. The new CFO restated revenue to the old policy, channel partners defaulted on ₹40 cr, and the auditor qualified the next accounts."
+   }
+  },
+  "threadline": {
+   "id": "threadline",
+   "name": "ThreadLine",
+   "statements": {
+    "pl": [
+     {
+      "label": "Revenue from operations",
+      "fy25": 600,
+      "fy26": 690,
+      "kind": "always"
+     },
+     {
+      "label": "Purchases of stock-in-trade (net of inventory change)",
+      "fy25": 312.0,
+      "fy26": 345.0,
+      "kind": "always"
+     },
+     {
+      "label": "Employee benefit expenses",
+      "fy25": 60,
+      "fy26": 70,
+      "kind": "always"
+     },
+     {
+      "label": "Store rent, influencer marketing & other",
+      "fy25": 150,
+      "fy26": 175,
+      "kind": "always"
+     },
+     {
+      "label": "EBITDA",
+      "fy25": 78.0,
+      "fy26": 100.0,
+      "kind": "total"
+     },
+     {
+      "label": "Depreciation & amortisation",
+      "fy25": 22,
+      "fy26": 26,
+      "kind": "always"
+     },
+     {
+      "label": "Finance costs",
+      "fy25": 8,
+      "fy26": 16,
+      "kind": "always"
+     },
+     {
+      "label": "Other income",
+      "fy25": 3,
+      "fy26": 3,
+      "kind": "always"
+     },
+     {
+      "label": "Profit before tax",
+      "fy25": 51.0,
+      "fy26": 61.0,
+      "kind": "total"
+     },
+     {
+      "label": "Tax expense",
+      "fy25": 12.8,
+      "fy26": 15.2,
+      "kind": "always"
+     },
+     {
+      "label": "Net profit / (loss)",
+      "fy25": 38.2,
+      "fy26": 45.8,
+      "kind": "grand"
+     }
+    ],
+    "bs": [
+     {
+      "label": "ASSETS",
+      "kind": "head"
+     },
+     {
+      "label": "Property, plant & equipment (net)",
+      "fy25": 123,
+      "fy26": 137,
+      "kind": "always"
+     },
+     {
+      "label": "Other non-current assets",
+      "fy25": 15,
+      "fy26": 15,
+      "kind": "always"
+     },
+     {
+      "label": "Inventories",
+      "fy25": 120,
+      "fy26": 230,
+      "kind": "opt"
+     },
+     {
+      "label": "Trade receivables",
+      "fy25": 14,
+      "fy26": 18,
+      "kind": "always"
+     },
+     {
+      "label": "Advances to suppliers & other current assets",
+      "fy25": 18,
+      "fy26": 45,
+      "kind": "always"
+     },
+     {
+      "label": "Cash & bank balances",
+      "fy25": 60.2,
+      "fy26": 76.0,
+      "kind": "always"
+     },
+     {
+      "label": "Total assets",
+      "fy25": 350.2,
+      "fy26": 521.0,
+      "kind": "grand"
+     },
+     {
+      "label": "EQUITY & LIABILITIES",
+      "kind": "head"
+     },
+     {
+      "label": "Shareholders' equity",
+      "fy25": 188.2,
+      "fy26": 234.0,
+      "kind": "always"
+     },
+     {
+      "label": "Borrowings",
+      "fy25": 70,
+      "fy26": 180,
+      "kind": "always"
+     },
+     {
+      "label": "Trade payables",
+      "fy25": 70,
+      "fy26": 82,
+      "kind": "always"
+     },
+     {
+      "label": "Other current liabilities",
+      "fy25": 22,
+      "fy26": 25,
+      "kind": "always"
+     },
+     {
+      "label": "Total equity & liabilities",
+      "fy25": 350.2,
+      "fy26": 521.0,
+      "kind": "grand"
+     }
+    ],
+    "cf": [
+     {
+      "label": "Net profit / (loss)",
+      "fy25": 38.2,
+      "fy26": 45.8,
+      "kind": "always"
+     },
+     {
+      "label": "Add: depreciation & amortisation",
+      "fy25": 22,
+      "fy26": 26,
+      "kind": "always"
+     },
+     {
+      "label": "(Increase)/decrease in inventories",
+      "fy25": -30,
+      "fy26": -110,
+      "kind": "opt"
+     },
+     {
+      "label": "(Increase)/decrease in receivables",
+      "fy25": -4,
+      "fy26": -4,
+      "kind": "always"
+     },
+     {
+      "label": "(Increase)/decrease in other current assets",
+      "fy25": -3,
+      "fy26": -27,
+      "kind": "always"
+     },
+     {
+      "label": "Increase/(decrease) in payables",
+      "fy25": 10,
+      "fy26": 12,
+      "kind": "always"
+     },
+     {
+      "label": "Increase/(decrease) in other current liabilities",
+      "fy25": 2,
+      "fy26": 3,
+      "kind": "always"
+     },
+     {
+      "label": "Cash from operating activities",
+      "fy25": 35.2,
+      "fy26": -54.2,
+      "kind": "total"
+     },
+     {
+      "label": "Purchase of property, plant & equipment",
+      "fy25": -35,
+      "fy26": -40,
+      "kind": "always"
+     },
+     {
+      "label": "Cash from investing activities",
+      "fy25": -35,
+      "fy26": -40,
+      "kind": "total"
+     },
+     {
+      "label": "Net borrowings / (repayments)",
+      "fy25": 20,
+      "fy26": 110,
+      "kind": "always"
+     },
+     {
+      "label": "Cash from financing activities",
+      "fy25": 20,
+      "fy26": 110,
+      "kind": "total"
+     },
+     {
+      "label": "Net change in cash",
+      "fy25": 20.2,
+      "fy26": 15.8,
+      "kind": "total"
+     },
+     {
+      "label": "Opening cash",
+      "fy25": 40,
+      "fy26": 60.2,
+      "kind": "always"
+     },
+     {
+      "label": "Closing cash",
+      "fy25": 60.2,
+      "fy26": 76.0,
+      "kind": "grand"
+     }
+    ],
+    "notes": [
+     "80 stores; online sales were 22% of FY26 revenue.",
+     "Inventory of ₹230 cr includes ₹74 cr of stock older than 12 months from past collections. No provision for obsolescence has been made, as management expects to sell it through outlet channels.",
+     "Related party: 38% of FY26 purchases (about ₹173 cr) were from Kesar Textiles Pvt Ltd, owned by the promoter's brother. Management states these were at arm's length. Advances to suppliers include ₹25 cr paid to Kesar Textiles.",
+     "Promoter shares pledged with lenders: 62% of the promoter holding (FY25: 15%).",
+     "Borrowings rose by ₹110 cr, mainly working-capital loans at 12.5%.",
+     "Gross margin improved to 50% from 48%, which management attributes to 'better sourcing'."
+    ],
+    "auditor": "Unmodified opinion. Key audit matter: valuation of inventory, including the ageing of stock and management's estimate of net realisable value."
+   },
+   "key": [
+    {
+     "id": "t1",
+     "stage": 1,
+     "diff": "easy",
+     "title": "Inventory nearly doubled while sales rose 15%",
+     "evidence": "Inventory ₹120 cr → ₹230 cr; about 240 days of stock vs about 140 last year."
+    },
+    {
+     "id": "t2",
+     "stage": 1,
+     "diff": "easy",
+     "title": "Borrowings and interest cost jumped",
+     "evidence": "Borrowings ₹70 cr → ₹180 cr; finance costs ₹8 cr → ₹16 cr."
+    },
+    {
+     "id": "t3",
+     "stage": 1,
+     "diff": "hard",
+     "title": "Advances and other current assets jumped",
+     "evidence": "Advances to suppliers & other current assets ₹18 cr → ₹45 cr."
+    },
+    {
+     "id": "t4",
+     "stage": 1,
+     "diff": "hard",
+     "title": "Gross margin rose while unsold stock piled up",
+     "evidence": "Gross margin 48% → 50% in a discount-heavy industry, while inventory doubled: old stock is not being written down."
+    },
+    {
+     "id": "t5",
+     "stage": 2,
+     "diff": "easy",
+     "title": "Profit up but operating cash flow negative",
+     "evidence": "Net profit ₹46 cr vs operating cash flow −₹54 cr, driven by the inventory build-up."
+    },
+    {
+     "id": "t6",
+     "stage": 3,
+     "diff": "medium",
+     "title": "₹74 cr of old stock with no provision",
+     "evidence": "Note 2: stock older than 12 months, no obsolescence provision."
+    },
+    {
+     "id": "t7",
+     "stage": 3,
+     "diff": "medium",
+     "title": "Large purchases from the promoter's brother",
+     "evidence": "Note 3: 38% of purchases from Kesar Textiles, plus a ₹25 cr advance to it."
+    },
+    {
+     "id": "t8",
+     "stage": 3,
+     "diff": "medium",
+     "title": "Promoter pledge jumped to 62%",
+     "evidence": "Note 4: pledged share of promoter holding up from 15% to 62%."
+    }
+   ],
+   "traps": [
+    "Large influencer marketing spend (normal for the brand)",
+    "Online share of sales growing",
+    "Viral social media following"
+   ],
+   "intel": {
+    "title": "Peer comparison: fast fashion retail",
+    "text": "Indian fast-fashion peers run inventory of 90–110 days and gross margins of 45–48%. Most write down stock older than 9 months."
+   },
+   "outcome": {
+    "ret": -48,
+    "story": "Took a ₹60 cr inventory write-down. Lenders sold some of the pledged promoter shares after the price fell, pushing it lower still. Kesar Textiles came under a lender review."
+   }
+  },
+  "pinnacle": {
+   "id": "pinnacle",
+   "name": "Pinnacle Logistics",
+   "statements": {
+    "pl": [
+     {
+      "label": "Revenue from operations",
+      "fy25": 1100,
+      "fy26": 1350,
+      "kind": "always"
+     },
+     {
+      "label": "Freight, fuel & operating costs",
+      "fy25": 792.0,
+      "fy26": 958.5,
+      "kind": "always"
+     },
+     {
+      "label": "Employee benefit expenses",
+      "fy25": 99.0,
+      "fy26": 114.8,
+      "kind": "always"
+     },
+     {
+      "label": "Other expenses",
+      "fy25": 66.0,
+      "fy26": 74.2,
+      "kind": "always"
+     },
+     {
+      "label": "EBITDA",
+      "fy25": 143.0,
+      "fy26": 202.5,
+      "kind": "total"
+     },
+     {
+      "label": "Depreciation & amortisation",
+      "fy25": 45,
+      "fy26": 48,
+      "kind": "always"
+     },
+     {
+      "label": "Finance costs",
+      "fy25": 20,
+      "fy26": 30,
+      "kind": "always"
+     },
+     {
+      "label": "Other income",
+      "fy25": 5,
+      "fy26": 6,
+      "kind": "always"
+     },
+     {
+      "label": "Profit before tax",
+      "fy25": 83.0,
+      "fy26": 130.5,
+      "kind": "total"
+     },
+     {
+      "label": "Tax expense",
+      "fy25": 20.8,
+      "fy26": 32.6,
+      "kind": "always"
+     },
+     {
+      "label": "Net profit / (loss)",
+      "fy25": 62.2,
+      "fy26": 97.9,
+      "kind": "grand"
+     }
+    ],
+    "bs": [
+     {
+      "label": "ASSETS",
+      "kind": "head"
+     },
+     {
+      "label": "Fleet, warehouses & equipment (net)",
+      "fy25": 415,
+      "fy26": 457,
+      "kind": "always"
+     },
+     {
+      "label": "Goodwill",
+      "fy25": 20,
+      "fy26": 110,
+      "kind": "opt"
+     },
+     {
+      "label": "Other non-current assets",
+      "fy25": 30,
+      "fy26": 30,
+      "kind": "always"
+     },
+     {
+      "label": "Inventories",
+      "fy25": 6,
+      "fy26": 6,
+      "kind": "opt"
+     },
+     {
+      "label": "Trade receivables",
+      "fy25": 230,
+      "fy26": 420,
+      "kind": "always"
+     },
+     {
+      "label": "Unbilled revenue & other current assets",
+      "fy25": 50,
+      "fy26": 95,
+      "kind": "always"
+     },
+     {
+      "label": "Cash & bank balances",
+      "fy25": 74.2,
+      "fy26": 47.1,
+      "kind": "always"
+     },
+     {
+      "label": "Total assets",
+      "fy25": 825.2,
+      "fy26": 1165.1,
+      "kind": "grand"
+     },
+     {
+      "label": "EQUITY & LIABILITIES",
+      "kind": "head"
+     },
+     {
+      "label": "Shareholders' equity",
+      "fy25": 442.2,
+      "fy26": 515.1,
+      "kind": "always"
+     },
+     {
+      "label": "Borrowings",
+      "fy25": 240,
+      "fy26": 500,
+      "kind": "always"
+     },
+     {
+      "label": "Trade payables",
+      "fy25": 95,
+      "fy26": 100,
+      "kind": "always"
+     },
+     {
+      "label": "Other current liabilities",
+      "fy25": 48,
+      "fy26": 50,
+      "kind": "always"
+     },
+     {
+      "label": "Total equity & liabilities",
+      "fy25": 825.2,
+      "fy26": 1165.1,
+      "kind": "grand"
+     }
+    ],
+    "cf": [
+     {
+      "label": "Net profit / (loss)",
+      "fy25": 62.2,
+      "fy26": 97.9,
+      "kind": "always"
+     },
+     {
+      "label": "Add: depreciation & amortisation",
+      "fy25": 45,
+      "fy26": 48,
+      "kind": "always"
+     },
+     {
+      "label": "(Increase)/decrease in inventories",
+      "fy25": -1,
+      "fy26": 0,
+      "kind": "opt"
+     },
+     {
+      "label": "(Increase)/decrease in receivables",
+      "fy25": -70,
+      "fy26": -190,
+      "kind": "always"
+     },
+     {
+      "label": "(Increase)/decrease in other current assets",
+      "fy25": -10,
+      "fy26": -45,
+      "kind": "always"
+     },
+     {
+      "label": "Increase/(decrease) in payables",
+      "fy25": 5,
+      "fy26": 5,
+      "kind": "always"
+     },
+     {
+      "label": "Increase/(decrease) in other current liabilities",
+      "fy25": 3,
+      "fy26": 2,
+      "kind": "always"
+     },
+     {
+      "label": "Cash from operating activities",
+      "fy25": 34.2,
+      "fy26": -82.1,
+      "kind": "total"
+     },
+     {
+      "label": "Purchase of property, plant & equipment",
+      "fy25": -60,
+      "fy26": -70,
+      "kind": "always"
+     },
+     {
+      "label": "Acquisition of subsidiary",
+      "fy25": 0,
+      "fy26": -110,
+      "kind": "opt"
+     },
+     {
+      "label": "Cash from investing activities",
+      "fy25": -60,
+      "fy26": -180,
+      "kind": "total"
+     },
+     {
+      "label": "Net borrowings / (repayments)",
+      "fy25": 40,
+      "fy26": 260,
+      "kind": "always"
+     },
+     {
+      "label": "Dividends paid",
+      "fy25": -20,
+      "fy26": -25,
+      "kind": "opt"
+     },
+     {
+      "label": "Cash from financing activities",
+      "fy25": 20,
+      "fy26": 235,
+      "kind": "total"
+     },
+     {
+      "label": "Net change in cash",
+      "fy25": -5.8,
+      "fy26": -27.1,
+      "kind": "total"
+     },
+     {
+      "label": "Opening cash",
+      "fy25": 80,
+      "fy26": 74.2,
+      "kind": "always"
+     },
+     {
+      "label": "Closing cash",
+      "fy25": 74.2,
+      "fy26": 47.1,
+      "kind": "grand"
+     }
+    ],
+    "notes": [
+     "Revenue from Orion Trade Links Pvt Ltd was ₹378 cr (28% of FY26 revenue; FY25: 12%). Orion and Pinnacle share a common director.",
+     "Of trade receivables of ₹420 cr, ₹265 cr is due from Orion Trade Links. ₹150 cr has been outstanding for more than 180 days. No expected-credit-loss provision has been made.",
+     "Unbilled revenue (services rendered but not yet invoiced) was ₹62 cr (FY25: ₹18 cr).",
+     "Acquisition: bought 100% of SwiftHaul Carriers Pvt Ltd for ₹110 cr from entities controlled by a relative of the promoter. Net assets acquired ₹20 cr; goodwill ₹90 cr. SwiftHaul's FY26 revenue was ₹28 cr.",
+     "Contingent liability: a disputed GST demand of ₹85 cr, not provided for.",
+     "Change of auditor: the previous auditor resigned in February 2026, stating that information it requested on certain related-party balances was not provided. A new auditor was appointed in March 2026.",
+     "Dividend of ₹25 cr paid in FY26."
+    ],
+    "auditor": "Qualified opinion. The auditor was unable to obtain sufficient evidence on the recoverability of ₹265 cr receivable from a related party, and could not determine whether any adjustment to these accounts is needed."
+   },
+   "key": [
+    {
+     "id": "p1",
+     "stage": 1,
+     "diff": "easy",
+     "title": "Receivables up 83% vs revenue up 23%",
+     "evidence": "Receivables ₹230 cr → ₹420 cr; receivable days about 76 → 114."
+    },
+    {
+     "id": "p2",
+     "stage": 1,
+     "diff": "hard",
+     "title": "Unbilled revenue and other current assets surged",
+     "evidence": "Unbilled revenue & other current assets ₹50 cr → ₹95 cr."
+    },
+    {
+     "id": "p3",
+     "stage": 1,
+     "diff": "medium",
+     "title": "Goodwill jumped after an acquisition",
+     "evidence": "Goodwill ₹20 cr → ₹110 cr."
+    },
+    {
+     "id": "p4",
+     "stage": 2,
+     "diff": "easy",
+     "title": "Record profit but negative operating cash flow",
+     "evidence": "Net profit ₹98 cr vs operating cash flow −₹82 cr."
+    },
+    {
+     "id": "p5",
+     "stage": 2,
+     "diff": "medium",
+     "title": "Borrowing to pay dividends",
+     "evidence": "Borrowings ₹240 cr → ₹500 cr while paying a ₹25 cr dividend with negative operating cash flow."
+    },
+    {
+     "id": "p6",
+     "stage": 3,
+     "diff": "hard",
+     "title": "28% of revenue from a related party",
+     "evidence": "Note 1: Orion Trade Links shares a director; ₹265 cr of receivables are from Orion."
+    },
+    {
+     "id": "p7",
+     "stage": 3,
+     "diff": "hard",
+     "title": "Overpaid for a related-party acquisition",
+     "evidence": "Note 4: ₹110 cr for a firm with ₹20 cr net assets and ₹28 cr revenue, bought from the promoter's relative."
+    },
+    {
+     "id": "p8",
+     "stage": 3,
+     "diff": "medium",
+     "title": "Previous auditor resigned over missing information",
+     "evidence": "Note 6."
+    },
+    {
+     "id": "p9",
+     "stage": 3,
+     "diff": "easy",
+     "title": "Qualified audit opinion",
+     "evidence": "Auditor could not verify the ₹265 cr related-party receivable."
+    },
+    {
+     "id": "p10",
+     "stage": 3,
+     "diff": "medium",
+     "title": "Unprovided ₹85 cr tax demand",
+     "evidence": "Note 5: contingent GST demand of ₹85 cr."
+    }
+   ],
+   "traps": [
+    "Fleet capex (normal for a logistics company)",
+    "Long dividend record",
+    "Industry awards"
+   ],
+   "intel": {
+    "title": "Peer comparison: freight and warehousing",
+    "text": "Listed logistics peers run receivable days of 60–70 and convert about 70% of EBITDA into operating cash flow. Related-party revenue above 10% is rare."
+   },
+   "outcome": {
+    "ret": -72,
+    "story": "Orion Trade Links defaulted. ₹230 cr of receivables were written off, a forensic audit was ordered, and the company's credit rating was cut to junk."
+   }
+  },
+  "bulletins": {
+   "items": [
+    {
+     "id": "n1",
+     "company": "threadline",
+     "kind": "noise",
+     "text": "ThreadLine crosses 5 million Instagram followers after a viral festive campaign.",
+     "note": "Popularity, not finances. Changes nothing."
+    },
+    {
+     "id": "n2",
+     "company": "pinnacle",
+     "kind": "noise",
+     "text": "Pinnacle Logistics named 'Warehousing Company of the Year' by a trade magazine.",
+     "note": "Awards say nothing about receivables."
+    },
+    {
+     "id": "n3",
+     "company": "sundaram",
+     "kind": "noise",
+     "text": "Sundaram's largest customer announces a 6% production cut for one quarter due to a chip shortage.",
+     "note": "Sounds alarming, but short-lived and Sundaram's contracts run to FY29."
+    },
+    {
+     "id": "n4",
+     "company": "brightpath",
+     "kind": "signal",
+     "text": "BrightPath's CFO resigns with immediate effect, citing personal reasons.",
+     "note": "Confirms accounting concerns."
+    },
+    {
+     "id": "n5",
+     "company": "voltgrid",
+     "kind": "signal",
+     "text": "VoltGrid in final talks with a ride-hailing fleet operator for 400 dedicated chargers.",
+     "note": "Positive: lifts utilisation toward breakeven."
+    },
+    {
+     "id": "n6",
+     "company": "pinnacle",
+     "kind": "signal",
+     "text": "Tax officials search the offices of Orion Trade Links, a large customer of Pinnacle Logistics.",
+     "note": "Confirms the related-party receivable risk."
+    },
+    {
+     "id": "n7",
+     "company": "mithai",
+     "kind": "signal",
+     "text": "Mithai Express says it will pause new store openings to 'focus on existing stores'.",
+     "note": "Confirms the expansion strain, mildly."
+    },
+    {
+     "id": "n8",
+     "company": "threadline",
+     "kind": "noise",
+     "text": "Cotton prices fall 8% this month.",
+     "note": "Small input-cost relief; does not fix the inventory problem."
+    },
+    {
+     "id": "n9",
+     "company": "threadline",
+     "kind": "signal",
+     "text": "Lenders ask ThreadLine's promoter for extra collateral after a fall in the share price.",
+     "note": "Confirms the pledge risk."
+    }
+   ]
+  }
+ }
+}
